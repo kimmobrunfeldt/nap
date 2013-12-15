@@ -36,7 +36,7 @@ class Nap(object):
 class Resource(object):
 
     # Allowed methods from requests call API
-    ALLOWED_METHODS = ['head', 'get', 'post', 'put', 'path', 'delete']
+    ALLOWED_METHODS = ['head', 'get', 'post', 'put', 'patch', 'delete']
 
     def __init__(self, api_url, resource):
         self._api_url = api_url
