@@ -1,14 +1,10 @@
-# Nap
-
-### Have some rest, take a Nap
+# Nap - *Have some rest, take a Nap*
 
 Nap provides simple and easy way to request REST API resources.
 
 ## Usage
 
-### class Nap
-
-Nap takes API's base url as its parameter, e.g. `api = Nap('<api-base-url>')`
+`Nap` takes API's base url as its parameter, e.g. `api = Nap('<api-base-url>')`
 
 Returned object will dynamically map called methods to API resources, e.g. `response = api.resource_name.get()`.
 
