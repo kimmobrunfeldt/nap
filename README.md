@@ -14,17 +14,20 @@ Returned object will dynamically map called methods to API resources, e.g. `resp
 
 Get EUR to USD conversion rates from [Bitstamp API](https://www.bitstamp.net/api/).
 
-    from nap import Nap
-    api = Nap('https://www.bitstamp.net/api/')
+```python
+from nap import Nap
+api = Nap('https://www.bitstamp.net/api/')
 
-    response = api.eur_usd.get()
-    print response.json()
-
+response = api.eur_usd.get()
+print response.json()
+```
 
 Example with authentication. All authentications supported by *requests* are automatically supported.
 
-    from nap import Nap
-    api = Nap('https://api.github.com/users/')
+```python
+from nap import Nap
+api = Nap('https://api.github.com/users/')
 
-    response = api('kimmobrunfeldt').get(auth=('user', 'pass'))
-    print response.json()
+response = api('kimmobrunfeldt').get(auth=('user', 'pass'))
+print response.json()
+```
