@@ -19,3 +19,12 @@ Get EUR to USD conversion rates from [Bitstamp API](https://www.bitstamp.net/api
 
     response = api.eur_usd.get()
     print response.json()
+
+
+Example with authentication. All authentications supported by *requests* are automatically supported.
+
+    from nap import Nap
+    api = Nap('https://api.github.com/users/')
+
+    response = api('kimmobrunfeldt').get(auth=('user', 'pass'))
+    print response.json()
