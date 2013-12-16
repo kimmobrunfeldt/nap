@@ -1,4 +1,4 @@
-# Nap - *Have some rest, take a Nap*
+# *Have some rest, take a Nap*
 
 Nap provides simple and easy way to request REST API resources.
 
@@ -20,7 +20,7 @@ api = Nap('https://www.bitstamp.net/api/')
 
 response = api.eur_usd.get()
 print response.json()
-```
+``
 
 Example with authentication. All authentications supported by *requests* are automatically supported.
 
