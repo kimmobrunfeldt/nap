@@ -10,8 +10,9 @@ import requests
 
 class Api(object):
 
-    def __init__(self, api_url, **request_kwargs):
+    def __init__(self, api_url, trailing_slash=False, **request_kwargs):
         self._api_url = self._ensure_trailing_slash(api_url)
+        self._traling_slash = trailing_slash
         self._request_kwargs = request_kwargs
 
     def __call__(self, resource):
@@ -42,6 +43,9 @@ class Api(object):
 
     def _new_resource(self, resource):
         resource_name = self._remove_leading_slash(resource)
+        if self._traling_slash:
+            resource_name = self._ensure_trailing_slash(resource_name)
+
         return Resource(
             self._api_url,
             resource_name,
@@ -71,6 +75,7 @@ class Resource(object):
         request_func = getattr(requests, http_method)
         def wrapper(*args, **kwargs):
             full_url = self._api_url + self._resource
+            print full_url
             new_kwargs = self._request_kwargs.copy()
             new_kwargs.update(kwargs.items())
             new_kwargs = self._before_request(new_kwargs, http_method)
