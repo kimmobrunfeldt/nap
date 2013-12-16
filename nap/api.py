@@ -71,8 +71,8 @@ class Resource(object):
         request_func = getattr(requests, http_method)
         def wrapper(*args, **kwargs):
             full_url = self._api_url + self._resource
-            print full_url
-            new_kwargs = dict(self._request_kwargs.items() + kwargs.items())
+            new_kwargs = self._request_kwargs.copy()
+            new_kwargs.update(kwargs.items())
             new_kwargs = self._before_request(new_kwargs, http_method)
             response = request_func(full_url, *args, **new_kwargs)
             return response
