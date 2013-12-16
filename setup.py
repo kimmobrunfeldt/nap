@@ -4,7 +4,7 @@
 from distutils.core import setup
 
 setup(
-    name='Nap',
+    name='nap',
     version='0.1.0',
     description=__doc__,
     license='MIT',
@@ -13,5 +13,6 @@ setup(
     ],
     url='https://github.com/kimmobrunfeldt/nap',
     author='Kimmo Brunfeldt',
+    author_email='kimmobrunfeldt+nap@gmail.com',
     packages=['nap']
 )
