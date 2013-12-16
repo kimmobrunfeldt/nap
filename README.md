@@ -22,7 +22,7 @@ class Api(object):
 **Better**
 
 ```python
-from nap import Nap
+from nap.api import Api
 api = Nap('https://www.bitstamp.net/api/')
 
 # That's it! Now you can call methods on API resources
@@ -31,6 +31,12 @@ api.eur_usd.get()
 ```
 
 #### *Stop coding needless code - have a Nap.*
+
+## Install
+
+Install with pip:
+
+    pip install nap
 
 ## Usage
 
@@ -47,7 +53,7 @@ HTTP method call will return requests' [Response object](http://requests.readthe
 Get EUR to USD conversion rates from [Bitstamp API](https://www.bitstamp.net/api/).
 
 ```python
-from nap import Nap
+from nap.api import Api
 api = Nap('https://www.bitstamp.net/api/')
 
 response = api.eur_usd.get()
@@ -57,8 +63,8 @@ print response.json()
 Example with authentication. All authentications supported by *requests* are automatically supported.
 
 ```python
-from nap import Nap
-api = Nap('https://api.github.com/users/')
+from nap.api import Api
+api = Api('https://api.github.com/users/')
 
 response = api('kimmobrunfeldt').get(auth=('user', 'pass'))
 print response.json()
@@ -67,10 +73,10 @@ print response.json()
 You can also pass default keyword arguments to be passed on every request in Nap initialization:
 
 ```python
-from nap import Nap
-# Keyword arguments given to Nap will be given to each request method
+from nap.api import Api
+# Keyword arguments given to Api will be given to each request method
 # by default for every request.
-api = Nap('https://api.github.com/', auth=('user', 'pass'))
+api = Api('https://api.github.com/', auth=('user', 'pass'))
 
 response = api('user').get()
 print response.json()

@@ -1,5 +1,5 @@
 """
-Easy REST API calling.
+Easy HTTP API calling.
 
 Useful information about dynamic attribute creation:
 http://docs.python.org/reference/datamodel.html#customizing-attribute-access
@@ -8,7 +8,7 @@ http://docs.python.org/reference/datamodel.html#customizing-attribute-access
 import requests
 
 
-class Nap(object):
+class Api(object):
 
     def __init__(self, api_url, **request_kwargs):
         self._api_url = self._ensure_trailing_slash(api_url)
