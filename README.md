@@ -97,9 +97,11 @@ response = api('users/kimmobrunfeldt').get(auth=('kimmo', 'password1'))
 
 Let's take [bitstamp-python-client](https://github.com/kmadac/bitstamp-python-client/) for an example. It contains client code for [Bitstamp's public API](https://www.bitstamp.net/api/).
 
-The whole [public -class](https://github.com/kmadac/bitstamp-python-client/blob/master/bitstamp/client.py#L9) can be squeezed to quite minimal code with *Nap*:
+The whole [public -class](https://github.com/kmadac/bitstamp-python-client/blob/4cefe8ffb29cac385f018bc836376d21147b1562/bitstamp/client.py#L9) can be squeezed to quite minimal code with *Nap*:
 
 ```python
+from nap.api import Api
+
 # Let's use incorrect naming(PEP8) to mimic the code in *bitstamp-python-client*
 class public(Api):
 
