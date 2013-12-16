@@ -1,14 +1,39 @@
-# *Have some rest, take a Nap*
+# Nap
 
 Nap provides simple and easy way to request REST API resources.
+
+After coding a few HTTP API wrapper classes, I decided to code Nap. With Nap, you don't need to create methods for every single resource in the API.
+
+**Bad**
+
+    class Api(object):
+        api_url = 'https://www.bitstamp.net/api/'
+
+        def ticker(self):
+            return self._get('ticker')
+
+        def conversion_rate_usd_eur(self):
+            return self._get('eur_usd')
+
+        # ... methods for all API resources ...
+
+**Better***
+
+    from nap import Nap
+    api = Nap('https://www.bitstamp.net/api/')
+
+    # That's it! Now you can call methods on API resources
+    api.ticker.get()
+    api.eur_usd.get()
+
 
 ## Usage
 
 `Nap` takes API's base url as its parameter, e.g. `api = Nap('<api-base-url>')`
 
-Returned object will dynamically map called methods to API resources, e.g. `response = api.resource_name.get()`.
+Returned object will dynamically map called methods to API resources, e.g. `resource = api.resource_name`.
 
-`api.resource_name` object dynamically maps its attributes to [*requests* -methods](http://requests.readthedocs.org/en/latest/api/#requests.head)
+`resource` has all HTTP methods which can be called naturally: `resource.get()`. The methods are dynamically mapped to [*requests* -methods](http://requests.readthedocs.org/en/latest/api/#requests.head).
 
 ## Examples
 
@@ -38,11 +63,11 @@ You can also pass default keyword arguments to be passed on every request in Nap
 from nap import Nap
 # Keyword arguments given to Nap will be given to each request method
 # by default for every request.
-api = Nap('https://api.github.com/users/', auth=('user', 'pass'))
+api = Nap('https://api.github.com/', auth=('user', 'pass'))
 
-response = api('kimmobrunfeldt').get()
+response = api('user').get()
 print response.json()
 
 # You can also override the default keyword arguments afterwords
-response = api('kimmobrunfeldt').get(auth=('kimmo', 'password1'))
+response = api('users/kimmobrunfeldt').get(auth=('kimmo', 'password1'))
 ```
