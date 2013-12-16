@@ -65,7 +65,7 @@ from nap.api import Api
 api = Api('https://www.bitstamp.net/api/')
 
 response = api.eur_usd.get()
-print response.json()
+print(response.json())
 ```
 
 Example with authentication. All authentications supported by *requests* are automatically supported.
@@ -75,7 +75,7 @@ from nap.api import Api
 api = Api('https://api.github.com/users/')
 
 response = api('kimmobrunfeldt').get(auth=('user', 'pass'))
-print response.json()
+print(response.json())
 ```
 
 You can also specify default keyword arguments to be passed on every request in Api initialization:
@@ -87,7 +87,7 @@ from nap.api import Api
 api = Api('https://api.github.com/', auth=('user', 'pass'))
 
 response = api('user').get()
-print response.json()
+print(response.json())
 
 # You can also override the default keyword arguments afterwords
 response = api('users/kimmobrunfeldt').get(auth=('kimmo', 'password1'))
