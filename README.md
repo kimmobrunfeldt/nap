@@ -31,3 +31,18 @@ api = Nap('https://api.github.com/users/')
 response = api('kimmobrunfeldt').get(auth=('user', 'pass'))
 print response.json()
 ```
+
+You can also pass default keyword arguments to be passed on every request in Nap initialization:
+
+```python
+from nap import Nap
+# Keyword arguments given to Nap will be given to each request method
+# by default for every request.
+api = Nap('https://api.github.com/users/', auth=('user', 'pass'))
+
+response = api('kimmobrunfeldt').get()
+print response.json()
+
+# You can also override the default keyword arguments afterwords
+response = api('kimmobrunfeldt').get(auth=('kimmo', 'password1'))
+```
