@@ -1,8 +1,8 @@
 # Nap
 
-Nap provides simple and easy way to request HTTP API resources.
+*Nap* provides simple and easy way to request HTTP API resources.
 
-After coding a few HTTP API wrapper classes, I decided to code Nap. With Nap, you don't need to create methods for every single resource in the API.
+After coding a few HTTP API wrapper classes, I decided to code *Nap*. With *Nap*, you don't need to create methods for every single resource in the API.
 
 **Bad**
 
@@ -36,9 +36,15 @@ api.eur_usd.get()
 
 Python versions 2.6 - 3.3 are supported.
 
-Install with pip:
+Install with *pip*:
 
     pip install nap
+
+Using *setup.py*:
+
+    git clone git@github.com:kimmobrunfeldt/nap.git
+    cd nap
+    python setup.py install
 
 ## Usage
 
