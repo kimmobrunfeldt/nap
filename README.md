@@ -48,7 +48,7 @@ Using *setup.py*:
 
 ## Usage
 
-`nap.api.Api` takes API's base url as its parameter, e.g. `api = Api('<api-base-url>')`
+`nap.api.Api` takes API's base url as its parameter, e.g. `api = Api('<api-base-url>')`. If your API's resources have trailing slash in their url, it can be enforced with `Api('<api-base-url>', trailing_slash=True)`.
 
 Returned object will dynamically map called methods to API resources, e.g. `resource = api.resource_name`.
 
