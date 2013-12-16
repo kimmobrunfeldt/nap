@@ -23,7 +23,7 @@ class Api(object):
 
 ```python
 from nap.api import Api
-api = Nap('https://www.bitstamp.net/api/')
+api = Api('https://www.bitstamp.net/api/')
 
 # That's it! Now you can call methods on API resources
 api.ticker.get()
@@ -48,13 +48,13 @@ Using *setup.py*:
 
 ## Usage
 
-`Nap` takes API's base url as its parameter, e.g. `api = Nap('<api-base-url>')`
+`nap.api.Api` takes API's base url as its parameter, e.g. `api = Api('<api-base-url>')`
 
 Returned object will dynamically map called methods to API resources, e.g. `resource = api.resource_name`.
 
 `resource` has all HTTP methods which can be called naturally: `resource.get()`. The methods are dynamically mapped to [*requests* -methods](http://requests.readthedocs.org/en/latest/api/#requests.head). You just don't need to specify the *url* parameter.
 
-HTTP method call will return requests' [Response object](http://requests.readthedocs.org/en/latest/api/#requests.Response).
+HTTP method call will return requests' [Response object](http://requests.readthedocs.org/en/latest/api/#requests.Response): `response = resource.get()`.
 
 ## Examples
 
@@ -62,7 +62,7 @@ Get EUR to USD conversion rates from [Bitstamp API](https://www.bitstamp.net/api
 
 ```python
 from nap.api import Api
-api = Nap('https://www.bitstamp.net/api/')
+api = Api('https://www.bitstamp.net/api/')
 
 response = api.eur_usd.get()
 print response.json()
@@ -78,7 +78,7 @@ response = api('kimmobrunfeldt').get(auth=('user', 'pass'))
 print response.json()
 ```
 
-You can also pass default keyword arguments to be passed on every request in Nap initialization:
+You can also specify default keyword arguments to be passed on every request in Api initialization:
 
 ```python
 from nap.api import Api
