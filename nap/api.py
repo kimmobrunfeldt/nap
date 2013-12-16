@@ -91,7 +91,7 @@ class Resource(object):
         def wrapper(*args, **kwargs):
             full_url = self._api_url + self._resource
             new_kwargs = self._request_kwargs.copy()
-            new_kwargs.update(self._before_request(kwargs.items(), http_method))
+            new_kwargs.update(self._before_request(kwargs, http_method))
             response = request_func(full_url, *args, **new_kwargs)
             return self._after_request(response)
 
