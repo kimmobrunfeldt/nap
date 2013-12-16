@@ -19,7 +19,7 @@ class Api(object):
     # ... methods for all API resources ...
 ```
 
-**Better***
+**Better**
 
 ```python
 from nap import Nap
@@ -30,7 +30,7 @@ api.ticker.get()
 api.eur_usd.get()
 ```
 
-##### *Stop coding needless code. Instead, take some REST - have a nap.*
+#### *Stop coding needless code - have a Nap.*
 
 ## Usage
 
