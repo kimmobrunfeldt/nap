@@ -93,6 +93,44 @@ print(response.json())
 response = api('users/kimmobrunfeldt').get(auth=('kimmo', 'password1'))
 ```
 
+## Example case
+
+Let's take [bitstamp-python-client](https://github.com/kmadac/bitstamp-python-client/) for an example. It contains client code for [Bitstamp's public API](https://www.bitstamp.net/api/).
+
+The whole [public -class](https://github.com/kmadac/bitstamp-python-client/blob/master/bitstamp/client.py#L9) can be squeezed to quite minimal code with *Nap*:
+
+```python
+# Let's use incorrect naming(PEP8) to mimic the code in *bitstamp-python-client*
+class public(Api):
+
+    # This will take all keyword arguments given to `nap.api.Api.resource.get()`
+    # and assume they are parameters for the HTTP request, not parameter
+    # to be passed to `requests` module.
+    def before_request(self, kwargs, method):
+        return {'params': kwargs}
+
+    def after_request(self, response):
+        if response.status_code != 200:
+            response.raise_for_status()
+
+        return response.json()
+
+```
+
+Now it is possible to call all Bitstamp public API resources. The only major difference is that you have to use same parameter names as Bitstamp's API.
+
+```python
+proxydict = None
+api = public('https://www.bitstamp.net/api/', proxies=proxydict)
+
+# Returns JSON dictionary with "bids" and "asks".
+# group - group orders with the same price (0 - false; 1 - true). Default: 1.
+api.order_book.get(group=0)
+
+api.transactions.get(time="minute")
+
+```
+
 ## License(MIT)
 
     Copyright (C) 2013 Kimmo Brunfeldt
