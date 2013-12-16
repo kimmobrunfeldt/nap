@@ -2,7 +2,7 @@
 
 *Nap* provides simple and easy way to request HTTP API resources.
 
-After coding a few HTTP API wrapper classes, I decided to code *Nap*. With *Nap*, you don't need to create methods for every single resource in the API.
+After coding a few HTTP API wrapper classes, I decided to code *Nap*. With *Nap*, you don't need to create methods for every single resource in the API. See the [example case](#example-case) for more. Shortly the reasoning is:
 
 **Bad**
 
@@ -104,7 +104,7 @@ The whole [public -class](https://github.com/kmadac/bitstamp-python-client/blob/
 class public(Api):
 
     # This will take all keyword arguments given to `nap.api.Api.resource.get()`
-    # and assume they are parameters for the HTTP request, not parameter
+    # and assume they are parameters for the HTTP request, not parameters
     # to be passed to `requests` module.
     def before_request(self, kwargs, method):
         return {'params': kwargs}
