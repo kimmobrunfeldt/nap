@@ -20,7 +20,7 @@ api = Nap('https://www.bitstamp.net/api/')
 
 response = api.eur_usd.get()
 print response.json()
-``
+```
 
 Example with authentication. All authentications supported by *requests* are automatically supported.
 
