@@ -40,6 +40,10 @@ Install with *pip*:
 
     pip install nap
 
+Install with *pip* straight from Github repository:
+
+    pip install git+git://github.com/kimmobrunfeldt/nap.git
+
 Using *setup.py*:
 
     git clone git@github.com:kimmobrunfeldt/nap.git
