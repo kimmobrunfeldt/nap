@@ -1,6 +1,6 @@
 # Nap
 
-Nap provides simple and easy way to request REST API resources.
+Nap provides simple and easy way to request HTTP API resources.
 
 After coding a few HTTP API wrapper classes, I decided to code Nap. With Nap, you don't need to create methods for every single resource in the API.
 
