@@ -1,5 +1,7 @@
 # Nap
 
+[![Build Status](https://travis-ci.org/kimmobrunfeldt/nap.png?branch=master)](https://travis-ci.org/kimmobrunfeldt/nap)
+
 *Nap* provides simple and easy way to request HTTP API resources.
 
 After coding a few HTTP API wrapper classes, I decided to code *Nap*. With *Nap*, you don't need to create methods for every single resource in the API. See the [example case](#example-case) for more. Shortly the reasoning is:
