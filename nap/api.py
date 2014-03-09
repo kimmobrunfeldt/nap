@@ -85,7 +85,7 @@ class Resource(object):
         """
         if http_method not in self.ALLOWED_METHODS:
             raise AttributeError('%r object has no attribute %r' %
-                                 (self.__class__.__http_method__, http_method))
+                                 (self.__class__.__name__, http_method))
 
         request_func = getattr(requests, http_method)
         def wrapper(*args, **kwargs):
