@@ -1,10 +1,21 @@
 language: python
 python:
-  - "2.6"
-  - "2.7"
-  - "3.2"
-  - "3.3"
-  - "pypy"
+  - '2.6'
+  - '2.7'
+  - '3.2'
+  - '3.3'
+  - pypy
 install:
   - pip install -r requirements.txt
 script: py.test
+notifications:
+  email:
+    - kimmo.brunfeldt+urltoimage@futurice.com
+  irc: 'irc.quakenet.org#luola'
+deploy:
+  provider: pypi
+  user: kimmobrunfeldt
+  password:
+    secure: WiNJUoJYaoDOep6V1aiMLMIH801+W7s11qqcYRKvxHWJyIcztTJA4YQmABxLjjDZPi9ljUpg2jRYzxuE83qQstWo/M6zkw7QnK2ahjzNTl/jzCmYGNYIgHiH0TYQzk0v5dtkQHjElVwq6uz6JzO/M8Fge/teUJUoeYI5EEOQ+8Y=
+  on:
+    tags: true
