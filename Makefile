@@ -25,7 +25,7 @@ clean-pyc:
 	find . -name '*~' -exec rm -f {} +
 
 clean-coverage:
-	rm .coverage
+	rm -f .coverage
 
 lint:
 	flake8 nap test
@@ -39,9 +39,8 @@ test-all:
 coverage:
 	py.test --cov nap -v --cov-report term-missing
 
-release: clean
-	python setup.py sdist upload
-	python setup.py bdist_wheel upload
+release: clean coverage test-all
+	python scripts/make-release.py
 
 dist: clean
 	python setup.py sdist
