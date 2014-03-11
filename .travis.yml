@@ -7,7 +7,8 @@ python:
   - pypy
 install:
   - pip install -r requirements.txt
-script: py.test
+  - pip install coveralls
+script: py.test --cov nap
 notifications:
   email:
     - kimmo.brunfeldt+urltoimage@futurice.com
@@ -21,3 +22,5 @@ deploy:
     secure: WiNJUoJYaoDOep6V1aiMLMIH801+W7s11qqcYRKvxHWJyIcztTJA4YQmABxLjjDZPi9ljUpg2jRYzxuE83qQstWo/M6zkw7QnK2ahjzNTl/jzCmYGNYIgHiH0TYQzk0v5dtkQHjElVwq6uz6JzO/M8Fge/teUJUoeYI5EEOQ+8Y=
   on:
     tags: true
+after_success:
+  coveralls
