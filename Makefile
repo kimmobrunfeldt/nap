@@ -37,7 +37,7 @@ test-all:
 	tox
 
 coverage:
-	py.test --cov nap -v --cov-report term-missing
+	coverage run --source=nap -m pytest
 
 release: clean
 	python setup.py sdist upload
