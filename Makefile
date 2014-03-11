@@ -32,7 +32,7 @@ test-all:
 	tox
 
 coverage:
-	py.test --cov nap
+	py.test --cov nap --cov-report term-missing
 
 release: clean
 	python setup.py sdist upload
