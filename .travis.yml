@@ -9,7 +9,8 @@ install:
   - pip install -r requirements.txt
   - pip install -r requirements-dev.txt
   - pip install coveralls
-script: py.test --cov nap
+script:
+  make coverage
 notifications:
   email:
     - kimmo.brunfeldt+urltoimage@futurice.com
