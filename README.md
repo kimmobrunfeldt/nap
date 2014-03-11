@@ -141,6 +141,21 @@ api.transactions.get(time="minute")
 
 ```
 
+## Makefile
+
+All `make` tasks:
+
+    clean - execute all clean tasks
+    clean-build - remove build artifacts
+    clean-pyc - remove Python file artifacts
+    clean-coverage - remove coverage artifacts
+    lint - check style with flake8
+    test - run tests quickly with the default Python
+    test-all - run tests on every Python version with tox
+    coverage - check code coverage quickly with the default Python
+    release - package and upload a release
+    dist - package
+
 ## Contributing
 
 [Docs for developers](docs/)
