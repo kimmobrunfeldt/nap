@@ -85,6 +85,11 @@ def get_git_tags():
 def git_is_clean():
     return Popen(['git', 'diff', '--quiet']).wait() == 0
 
+
+def git_push():
+    return Popen(['git', 'push']).wait()
+
+
 def git_push_tags():
     return Popen(['git', 'push', '--tags']).wait()
 
@@ -127,6 +132,7 @@ def main():
     set_setup_version(new_version)
     make_git_commit('Bump version number to %s', new_version)
     make_git_tag(new_version)
+    git_push()
     git_push_tags()
     set_init_version(dev_version)
     set_setup_version(dev_version)
