@@ -1,8 +1,10 @@
 .PHONY: help clean clean-pyc clean-build list test test-all coverage docs release sdist
 
 help:
+	@echo "clean - execute all clean tasks"
 	@echo "clean-build - remove build artifacts"
 	@echo "clean-pyc - remove Python file artifacts"
+	@echo "clean-coverage - remove coverage artifacts"
 	@echo "lint - check style with flake8"
 	@echo "test - run tests quickly with the default Python"
 	@echo "test-all - run tests on every Python version with tox"
@@ -10,7 +12,7 @@ help:
 	@echo "release - package and upload a release"
 	@echo "dist - package"
 
-clean: clean-build clean-pyc
+clean: clean-build clean-pyc clean-coverage
 
 clean-build:
 	rm -fr build/
@@ -21,6 +23,9 @@ clean-pyc:
 	find . -name '*.pyc' -exec rm -f {} +
 	find . -name '*.pyo' -exec rm -f {} +
 	find . -name '*~' -exec rm -f {} +
+
+clean-coverage:
+	rm .coverage
 
 lint:
 	flake8 nap test
