@@ -27,4 +27,4 @@ after_success:
   - cat .coverage
   - pip install coverage
   - coverage --report
-  - coveralls
+  - coveralls --verbose
