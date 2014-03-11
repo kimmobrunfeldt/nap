@@ -1,6 +1,7 @@
 include LICENSE
 include README.md
+include requirements.txt
 
-recursive-include nap *
-recursive-exclude nap *.pyc
-recursive-exclude nap *.pyo
+global-exclude *.pyc
+global-exclude *.pyo
+include-recursive nap *

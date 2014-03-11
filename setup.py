@@ -1,5 +1,15 @@
 #!/usr/bin/env python
 
+from pip.req import parse_requirements
+
+# parse_requirements() returns generator of pip.req.InstallRequirement objects
+install_reqs = parse_requirements('requirements.txt')
+
+# reqs is a list of requirement
+# e.g. ['django==1.5.1', 'mezzanine==1.4.6']
+reqs = [str(ir.req) for ir in install_reqs]
+
+
 try:
     from setuptools import setup
 except ImportError:
@@ -13,7 +23,7 @@ readme = """Read docs from GitHub_
 
 setup(
     name='nap',
-    version='0.1.2',
+    version='0.1.2-dev',
     description='Clean way to request HTTP API resources',
     long_description=readme,
     author='Kimmo Brunfeldt',
@@ -24,11 +34,10 @@ setup(
     ],
     package_dir={'nap': 'nap'},
     include_package_data=True,
-    install_requires=[
-    ],
+    install_requires=reqs,
     license='MIT',
     zip_safe=False,
-    keywords='nap',
+    keywords='nap rest requests http',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
