@@ -13,7 +13,9 @@ notifications:
     - kimmo.brunfeldt+urltoimage@futurice.com
   irc: 'irc.quakenet.org#luola'
 deploy:
+  # https://github.com/travis-ci/dpl#pypi
   provider: pypi
+  distributions: 'sdist wheel'
   user: kimmobrunfeldt
   password:
     secure: WiNJUoJYaoDOep6V1aiMLMIH801+W7s11qqcYRKvxHWJyIcztTJA4YQmABxLjjDZPi9ljUpg2jRYzxuE83qQstWo/M6zkw7QnK2ahjzNTl/jzCmYGNYIgHiH0TYQzk0v5dtkQHjElVwq6uz6JzO/M8Fge/teUJUoeYI5EEOQ+8Y=

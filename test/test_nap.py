@@ -35,6 +35,3 @@ class TestNap(unittest.TestCase):
         """Make sure resource can't be called directly"""
         api = Api('')
         self.assertRaises(TypeError, api.resource)
-
-
-

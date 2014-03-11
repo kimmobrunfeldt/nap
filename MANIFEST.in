@@ -1,4 +1,5 @@
-include MANIFEST.in README
+include LICENSE
+include README.md
 
 recursive-include nap *
 recursive-exclude nap *.pyc

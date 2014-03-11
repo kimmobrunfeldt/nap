@@ -88,6 +88,7 @@ class Resource(object):
                                  (self.__class__.__name__, http_method))
 
         request_func = getattr(requests, http_method)
+
         def wrapper(*args, **kwargs):
             full_url = self._api_url + self._resource
             new_kwargs = self._request_kwargs.copy()
