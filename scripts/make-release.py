@@ -117,7 +117,7 @@ def main():
         raise fail('Current version is not dev, %s' % current_version_dev)
 
     new_version = bump_version(current_version)
-    dev_version = bump_version(current_version) + '-dev'
+    dev_version = new_version + '-dev'
 
     info('Releasing %s', new_version)
     tags = get_git_tags()
@@ -136,6 +136,7 @@ def main():
     git_push_tags()
     set_init_version(dev_version)
     set_setup_version(dev_version)
+    make_git_commit('Set development version: %s', dev_version)
 
 
 if __name__ == '__main__':
