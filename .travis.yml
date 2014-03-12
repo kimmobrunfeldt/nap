@@ -13,7 +13,7 @@ script:
   make coverage
 notifications:
   email:
-    - kimmo.brunfeldt+urltoimage@futurice.com
+    - kimmobrunfeldt@gmail.com
 deploy:
   # https://github.com/travis-ci/dpl#pypi
   provider: pypi
