@@ -5,7 +5,7 @@
 [![Badge fury](https://badge.fury.io/py/nap.png)](https://badge.fury.io/py/nap.png)
 [![Badge PyPi](https://pypip.in/d/nap/badge.png)](https://pypip.in/d/nap/badge.png)
 
-*Nap* provides simple and easy way to request HTTP API resources. After coding a few HTTP API wrapper classes, I decided to code *Nap*. Nap is just a very small(*~100 loc*) wrapper around [requests](http://requests.readthedocs.org).
+*Nap* provides simple and easy way to request HTTP API resources. After coding a few HTTP API wrapper classes, I decided to code *Nap*. It's is just a small(*~100 loc*) wrapper around [requests](http://requests.readthedocs.org).
 
 With *Nap*, you don't need to create methods for every single resource in the API. See the [example case](#example-case) for more. Shortly the reasoning is:
 
