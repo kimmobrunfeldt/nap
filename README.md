@@ -41,15 +41,15 @@ api.eur_usd.get()
 
 Python versions 2.6 - 3.3 are supported.
 
-Install with *pip*:
+Install latest release with *pip*:
 
     pip install nap
 
-Install with *pip* straight from Github repository:
+Install latest development version usin *pip*:
 
     pip install git+git://github.com/kimmobrunfeldt/nap.git
 
-Using *setup.py*:
+Install latest development version using *setup.py*:
 
     git clone git@github.com:kimmobrunfeldt/nap.git
     cd nap
