@@ -35,6 +35,13 @@ api.ticker.get()
 api.eur_usd.get()
 ```
 
+Get started
+
+* Look through [examples](#examples)
+* See [API documentation](docs/nap-api.md)
+* [Dive into code](nap/api.py)
+
+
 ## Install
 
 Python versions 2.6 - 3.3 are supported and tested against.
@@ -55,7 +62,7 @@ Install latest development version using *setup.py*:
 
 ## Nap API documentation
 
-See [API documentation](docs/nap-api.md) or [dive into code](nap/api.py)
+See [API documentation](docs/nap-api.md)
 
 ## Examples
 
