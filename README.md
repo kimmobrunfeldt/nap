@@ -5,7 +5,7 @@
 [![Badge fury](https://badge.fury.io/py/nap.png)](https://badge.fury.io/py/nap.png)
 [![Badge PyPi](https://pypip.in/d/nap/badge.png)](https://pypip.in/d/nap/badge.png)
 
-*Nap* provides simple and easy way to request HTTP API resources. After coding a few HTTP API wrapper classes, I decided to code *Nap*. It's is just a small(*~100 loc*) wrapper around [requests](http://requests.readthedocs.org).
+*Nap* provides simple and easy way to request HTTP API resources. After coding a few HTTP API wrapper classes, I decided to code *Nap*. It's is just a small(*~100 loc*) wrapper around [requests][].
 
 With *Nap*, you don't need to create methods for every single resource in the API. See the [example case](#example-case) for more. Shortly the reasoning is:
 
@@ -55,74 +55,9 @@ Install latest development version using *setup.py*:
     cd nap
     python setup.py install
 
-## Nap reference
+## Nap API documentation
 
-API reference
-
-### [nap.api.Api(_api_url, trailing_slash=False, \*\*request_kwargs_)](nap/api.py)
-
-* `api_url` API's base url. Trailing slash is optional. For example *https://api.github.com*
-* `trailing_slash` If True, every request will contain trailing slash in the final requested url.
-    Trailing slash `https://api.github.com/users/`. No trailing slash `https://api.github.com/users.
-* `\*\*request_kwargs` Keyword arguments that will be passed to [requests' method](http://docs.python-requests.org/en/latest/api/#requests.head) on each request
-
-This class has special behaviour with its methods - each method will be dynamically mapped to a [Resource]() instance.
-
-You can reference to resource in two ways
-
-```python
-api.resource.get()
-api('resource').get()
-```
-
-#### Api.before_request(*request_kwargs, method*)
-
-* `request_kwargs` Keyword arguments that were passed to the request method. This does not contain the default keyword arguments given when initializing Api class. For example in `api.resource.get(verify=False)`, the value would be `{'verify': False}`.
-* `method` The HTTP method of request in lower case. For example `get`.
-
-This method should return keyword arguments. These returned kwargs will be added on top of default request_kwargs given to class. The sum of both keyword arguments will be passed to [requests' method](http://docs.python-requests.org/en/latest/api/#requests.head).
-
-#### Api.after_request(*response*)
-
-* `response` [Response](http://docs.python-requests.org/en/latest/api/#requests.Response) object returned by request
-
-This method can be used to add default behavior for response modification. For example if you're working with a JSON API, you can return deserialized JSON from this method instead of `Response` object.
-
-The returned value will be returned to the API method caller: `api.users.get()`.
-
-### [nap.api.Resource(*api_url, resource, request_kwargs, before_request, after_request*)](nap/api.py#L69)
-
-* `api_url` Base url of the API
-* `resource` Resource path. Examples: `'users'`, `'users/list'`.
-* `request_kwargs` Default kwargs to be given to [requests' method](http://docs.python-requests.org/en/latest/api/#requests.head) on each request.
-* `before_request` See [before_request()](https://github.com/kimmobrunfeldt/nap#before_requestrequest_kwargs-method)
-* `after_request` See [after_request()](https://github.com/kimmobrunfeldt/nap#after_requestresponse)
-
-The only difference to [requests' methods](http://docs.python-requests.org/en/latest/api/#requests.head) is that the first *url* parameter is passed automatically. You only need to pass the keyword arguments.
-
-#### Resource.head(_\*\*kwargs_)
-
-See http://docs.python-requests.org/en/latest/api/#requests.head
-
-#### Resource.get(_\*\*kwargs_)
-
-See http://docs.python-requests.org/en/latest/api/#requests.get
-
-#### Resource.post(_data=None, \*\*kwargs_)
-
-See http://docs.python-requests.org/en/latest/api/#requests.post
-
-#### Resource.put(_data=None, \*\*kwargs_)
-
-See http://docs.python-requests.org/en/latest/api/#requests.put
-
-#### Resource.patch(_data=None, \*\*kwargs_)
-
-See http://docs.python-requests.org/en/latest/api/#requests.patch
-
-#### Resource.delete(_\*\*kwargs_)
-
-http://docs.python-requests.org/en/latest/api/#requests.delete
+See [API documentation](docs/nap-api.md)
 
 ## Examples
 
@@ -184,7 +119,6 @@ class public(Api):
             response.raise_for_status()
 
         return response.json()
-
 ```
 
 Now it is possible to call all Bitstamp public API resources. The only major difference is that you have to use same parameter names as Bitstamp's API.
@@ -198,37 +132,10 @@ api = public('https://www.bitstamp.net/api/', proxies=proxydict)
 api.order_book.get(group=0)
 
 api.transactions.get(time="minute")
-
 ```
-
-## Makefile
-
-All `make` tasks:
-
-    clean - execute all clean tasks
-    clean-build - remove build artifacts
-    clean-pyc - remove Python file artifacts
-    clean-coverage - remove coverage artifacts
-    lint - check style with flake8
-    test - run tests quickly with the default Python
-    test-all - run tests on every Python version with tox
-    coverage - check code coverage quickly with the default Python
-    release - package and upload a release
-    dist - package
 
 ## Contributing
 
-[Docs for developers](docs/)
+[Documentation for Nap developers](docs/)
 
-## License(MIT)
-
-    Copyright (C) 2013 Kimmo Brunfeldt
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-    The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-    [requests]: http://docs.python-requests.org/en/latest/     "Requests"
+[requests]: http://docs.python-requests.org/en/latest/     "Requests"
