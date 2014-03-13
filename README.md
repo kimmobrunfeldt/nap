@@ -35,8 +35,6 @@ api.ticker.get()
 api.eur_usd.get()
 ```
 
-#### *Stop coding needless code - have a Nap.*
-
 ## Install
 
 Python versions 2.6 - 3.3 are supported and tested against.
