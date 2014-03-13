@@ -70,12 +70,12 @@ def build_and_upload():
 
 
 def fail(message, *args):
-    print >> sys.stderr, 'Error:', message % args
+    print('Error: %s' % (message % args))
     sys.exit(1)
 
 
 def info(message, *args):
-    print >> sys.stderr, message % args
+    print('-> %s' % (message % args))
 
 
 def get_git_tags():
