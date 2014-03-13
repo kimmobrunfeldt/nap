@@ -39,7 +39,7 @@ api.eur_usd.get()
 
 ## Install
 
-Python versions 2.6 - 3.3 are supported.
+Python versions 2.6 - 3.3 are supported and tested against.
 
 Install latest release with *pip*:
 
@@ -55,15 +55,79 @@ Install latest development version using *setup.py*:
     cd nap
     python setup.py install
 
-## Usage
+## Nap reference
 
-`nap.api.Api` takes API's base url as its parameter, e.g. `api = Api('<api-base-url>')`. If your API's resources have trailing slash in their url, it can be enforced with `Api('<api-base-url>', trailing_slash=True)`.
+API reference
 
-Returned object will dynamically map called methods to API resources, e.g. `resource = api.resource_name`.
+### [nap.api.Api(*api_url, trailing_slash=False, \*\*request_kwargs*)](nap/api.py)
 
-`resource` has all HTTP methods which can be called naturally: `resource.get()`. The methods are dynamically mapped to [*requests* -methods](http://requests.readthedocs.org/en/latest/api/#requests.head). You just don't need to specify the *url* parameter.
+* *api_url* - API's base url. Trailing slash is optional. For example *https://api.github.com*
+* *trailing_slash* - If True, every request will contain trailing slash in the final requested url.
+    Trailing slash *https://api.github.com/users/*. No trailing slash *https://api.github.com/users*.
+* *\*\*request_kwargs* - Keyword arguments that will be passed to [requests' method](http://docs.python-requests.org/en/latest/api/#requests.head) on each request
 
-HTTP method call will return requests' [Response object](http://requests.readthedocs.org/en/latest/api/#requests.Response): `response = resource.get()`.
+For example
+```python
+api = Api('https://api.github.com')
+```
+
+This class has special behaviour with its methods - each method will be dynamically mapped to a [Resource]() instance. For example
+```python
+users = api.users
+```
+
+Now users variable is instance of [Resource]() and all HTTP methods can be called for the instance, like this
+```python
+users.get()
+```
+#### .before_request(*request_kwargs, method*)
+
+* *request_kwargs* - Keyword arguments that were passed to the request method. This does not contain the default keyword arguments given when initializing Api class. For example in `api.resource.get(verify=False)`, the value would be `{'verify': False}`.
+* *method* - The HTTP method of request in lower case. For example `get`.
+
+This method should return keyword arguments. These returned kwargs will be added on top of default request_kwargs given to class. The sum of both keyword arguments will be passed to [requests' method](http://docs.python-requests.org/en/latest/api/#requests.head).
+
+#### .after_request(*response*)
+
+* *response* - [Response](http://docs.python-requests.org/en/latest/api/#requests.Response) object returned by request
+
+This method can be used to add default behavior for response modification. For example if you're working with a JSON API, you can return deserialized JSON from this method instead of `Response` object.
+
+The returned value will be returned to the API method caller: `api.users.get()`.
+
+### [nap.api.Resource(*api_url, resource, request_kwargs, before_request, after_request*)](nap/api.py#L69)
+
+* *api_url* - Base url of the API
+* *resource* - Resource path. Examples: `users`, `users/list`.
+* *request_kwargs* - Default kwargs to be given to [requests' method](http://docs.python-requests.org/en/latest/api/#requests.head) on each request.
+* *before_request* - See [before_request()]
+* *after_request* - See [after_request()]
+
+The only difference to [requests' methods](http://docs.python-requests.org/en/latest/api/#requests.head) is that the first *url* parameter is passed automatically. You only need to pass the keyword arguments.
+
+#### .head(*\*\*kwargs*)
+
+See http://docs.python-requests.org/en/latest/api/#requests.head
+
+#### .get(*\*\*kwargs*)
+
+See http://docs.python-requests.org/en/latest/api/#requests.get
+
+#### .post(*data=None, \*\*kwargs*)
+
+See http://docs.python-requests.org/en/latest/api/#requests.post
+
+#### .put(*data=None, \*\*kwargs*)
+
+See http://docs.python-requests.org/en/latest/api/#requests.put
+
+#### .patch(*data=None, \*\*kwargs*)
+
+See http://docs.python-requests.org/en/latest/api/#requests.patch
+
+#### .delete(\*\*kwargs*)
+
+http://docs.python-requests.org/en/latest/api/#requests.delete
 
 ## Examples
 
@@ -170,3 +234,6 @@ All `make` tasks:
     The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+    [requests]: http://docs.python-requests.org/en/latest/     "Requests"
