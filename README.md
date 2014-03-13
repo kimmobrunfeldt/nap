@@ -55,7 +55,7 @@ Install latest development version using *setup.py*:
 
 ## Nap API documentation
 
-See [API documentation](docs/nap-api.md)
+See [API documentation](docs/nap-api.md) or [dive into code](nap/api.py)
 
 ## Examples
 
