@@ -35,7 +35,7 @@ api.ticker.get()
 api.eur_usd.get()
 ```
 
-Get started
+**Get started**
 
 * Look through [examples](#examples)
 * See [API documentation](docs/nap-api.md)
