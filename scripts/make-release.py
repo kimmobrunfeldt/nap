@@ -106,7 +106,7 @@ def make_git_tag(tag):
 
 def main():
     os.chdir(os.path.join(os.path.dirname(__file__), '..'))
-    sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+    sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
     import nap
 
@@ -114,7 +114,7 @@ def main():
     if current_version_dev.endswith('-dev'):
         current_version = current_version_dev[:-len('-dev')]
     else:
-        raise fail('Current version is not dev, %s' % current_version_dev)
+        fail('Current version is not dev, %s' % current_version_dev)
 
     new_version = bump_version(current_version)
     dev_version = new_version + '-dev'
