@@ -19,6 +19,17 @@ Makefile contains all useful tasks:
 
 Example usage `make test`
 
+## Making a release
+
+This makes a *patch* release.
+
+* Commit your changes
+* Run `make release`
+
+    It will automatically update dev version to newer release version, push code and tags
+
+* Add release notes to GitHub
+
 ## Contributing
 
 Contributions are welcome, and they are greatly appreciated! Every
