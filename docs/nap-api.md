@@ -2,11 +2,11 @@
 
 Reference documentation
 
-### [nap.api.Api(api_url, trailing_slash=False, \*\*default_kwargs)](/nap/api.py)
+### [nap.api.Api(api_url, add_trailing_slash=False, \*\*default_kwargs)](/nap/api.py)
 
 * `api_url` API's base url. Trailing slash is optional. For example `'https://api.github.com'`
-* `trailing_slash` If *True*, every request will contain trailing slash in the final requested url.
-    Trailing slash `https://api.github.com/users/`. No trailing slash `https://api.github.com/users`.
+* `add_trailing_slash` If *True*, every request will be forced to use trailing slash in the final requested url. By default, trailing slash is not modified at all. You can pass either with or without it.
+    Trailing slash `https://api.github.com/users/`. No trailing slash `https://api.github.com/users`. This is useful in cases where you want to call with this style `api.resource.get`, but your API wants trailing slash in request urls.
 * `**default_kwargs` Keyword arguments that will be passed to [requests' method](http://docs.python-requests.org/en/latest/api/#requests.request) on each request
 
 This class has special behaviour with its methods - each method will be dynamically mapped to a [Resource](#napapiresourcefull_url-api) instance.
