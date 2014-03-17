@@ -62,19 +62,25 @@ class TestNap(unittest.TestCase):
     @patch('requests.request')
     def test_trailing_slash(self, r_request):
         """Test that trailing slash will be automatically removed/added"""
-        api_add_slash = Api('', trailing_slash=True)
+        api = Api('')
         r_request = MagicMock(return_value=None)
 
-        api_add_slash('resource').get()
-        requests.request.assert_called_with(
-            'GET',
-            '/resource/'
-        )
-
-        api_rm_slash = Api('', trailing_slash=False)
-        api_rm_slash('resource/').get()
+        # By default slash will not modified anyhow
+        api('resource').get()
         requests.request.assert_called_with(
             'GET',
             '/resource'
         )
 
+        api('resource/').get()
+        requests.request.assert_called_with(
+            'GET',
+            '/resource/'
+        )
+
+        api_add_slash = Api('', add_trailing_slash=True)
+        api_add_slash('resource').get()
+        requests.request.assert_called_with(
+            'GET',
+            '/resource/'
+        )
