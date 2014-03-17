@@ -87,10 +87,12 @@ def git_is_clean():
 
 
 def git_push():
+    info('git push')
     return Popen(['git', 'push']).wait()
 
 
 def git_push_tags():
+    info('git push --tags')
     return Popen(['git', 'push', '--tags']).wait()
 
 
