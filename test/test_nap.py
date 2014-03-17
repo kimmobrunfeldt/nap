@@ -10,6 +10,7 @@ import unittest
 import requests
 
 from nap.api import Api
+from nap.api import Resource
 
 
 class TestNap(unittest.TestCase):
@@ -84,3 +85,17 @@ class TestNap(unittest.TestCase):
             'GET',
             '/resource/'
         )
+
+    @patch('requests.request')
+    def test_all_methods(self, r_request):
+        """Test all HTTP methods"""
+        api = Api('')
+        r_request = MagicMock(return_value=None)
+
+        for method in Resource.ALLOWED_METHODS:
+            getattr(api.resource, method.lower())()
+
+            requests.request.assert_called_with(
+                method,
+                '/resource'
+            )
