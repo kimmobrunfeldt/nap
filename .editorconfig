@@ -18,6 +18,11 @@ indent_size = 4
 indent_style = space
 indent_size = 4
 
+# Markdown
+[*.md]
+indent_style = space
+indent_size = 4
+
 # Matches the exact files package.json and .travis.yml
 [{package.json,.travis.yml,Gruntfile.js}]
 indent_style = space
