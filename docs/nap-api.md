@@ -48,6 +48,8 @@ Returns new default kwargs.
 
 The only difference to [requests' methods](http://docs.python-requests.org/en/latest/api/#requests.request) is that `url` and `method` parameters are passed automatically. You only need to pass the keyword arguments.
 
+You can also call methods in uppercase, for example `Resource.GET()`.
+
 #### Resource.head(**kwargs)
 
 See http://docs.python-requests.org/en/latest/api/#requests.request
