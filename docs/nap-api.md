@@ -51,29 +51,35 @@ The only difference to [requests' methods](http://docs.python-requests.org/en/la
 #### Resource.head(**kwargs)
 
 See http://docs.python-requests.org/en/latest/api/#requests.request
+
 Only difference is that `url` and `method` parameters are passed automatically.
 
 #### Resource.get(**kwargs)
 
 See http://docs.python-requests.org/en/latest/api/#requests.request
+
 Only difference is that `url` and `method` parameters are passed automatically.
 
 #### Resource.post(**kwargs)
 
 See http://docs.python-requests.org/en/latest/api/#requests.request
+
 Only difference is that `url` and `method` parameters are passed automatically.
 
 #### Resource.put(**kwargs)
 
 See http://docs.python-requests.org/en/latest/api/#requests.request
+
 Only difference is that `url` and `method` parameters are passed automatically.
 
 #### Resource.patch(**kwargs)
 
 See http://docs.python-requests.org/en/latest/api/#requests.request
+
 Only difference is that `url` and `method` parameters are passed automatically.
 
 #### Resource.delete(**kwargs)
 
 See http://docs.python-requests.org/en/latest/api/#requests.request
+
 Only difference is that `url` and `method` parameters are passed automatically.
