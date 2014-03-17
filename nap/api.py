@@ -14,9 +14,9 @@ class Api(object):
     will be dynamically mapped to a Resource instance.
     """
 
-    def __init__(self, api_url, trailing_slash=False, **default_kwargs):
+    def __init__(self, api_url, add_trailing_slash=False, **default_kwargs):
         self._api_url = self._ensure_trailing_slash(api_url)
-        self._traling_slash = trailing_slash
+        self._add_trailing_slash = add_trailing_slash
         self._default_kwargs = default_kwargs
 
     def __call__(self, resource):
@@ -69,10 +69,8 @@ class Api(object):
     def _new_resource(self, resource):
         """Create new Resource object with correct url."""
         resource_name = self._remove_leading_slash(resource)
-        if self._traling_slash:
+        if self._add_trailing_slash:
             resource_name = self._ensure_trailing_slash(resource_name)
-        else:
-            resource_name = self._ensure_no_trailing_slash(resource_name)
 
         return Resource(self._api_url + resource_name, self)
 
