@@ -37,19 +37,24 @@ class TestNap(unittest.TestCase):
         api = Api('')
         self.assertRaises(TypeError, api.resource)
 
-    @patch('requests.get')
-    def test_default_parameters(self, requests_get):
+    @patch('requests.request')
+    def test_default_parameters(self, r_request):
         """Test default parameter behavior"""
         api = Api('', auth=('user', 'password'))
-        requests.get = MagicMock(return_value=None)
+        r_request = MagicMock(return_value=None)
 
         # Make sure defaults are passed for each request
         api.resource.get()
-        requests.get.assert_called_with('/resource', auth=('user', 'password'))
+        requests.request.assert_called_with(
+            'GET',
+            '/resource',
+            auth=('user', 'password')
+        )
 
         # Make sure single calls can override defaults
         api.resource.get(auth=('defaults', 'overriden'))
-        requests.get.assert_called_with(
+        requests.request.assert_called_with(
+            'GET',
             '/resource',
             auth=('defaults', 'overriden')
         )

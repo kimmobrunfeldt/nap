@@ -9,11 +9,15 @@ import requests
 
 
 class Api(object):
+    """
+    This class has special behaviour with its methods - each attribute
+    will be dynamically mapped to a Resource instance.
+    """
 
-    def __init__(self, api_url, trailing_slash=False, **request_kwargs):
+    def __init__(self, api_url, trailing_slash=False, **default_kwargs):
         self._api_url = self._ensure_trailing_slash(api_url)
         self._traling_slash = trailing_slash
-        self._request_kwargs = request_kwargs
+        self._default_kwargs = default_kwargs
 
     def __call__(self, resource):
         """Makes it possible to call API resources that are illegal method
@@ -27,25 +31,31 @@ class Api(object):
         """
         return self._new_resource(name)
 
-    def before_request(self, request_kwargs, method):
-        """This method can be used to customize each request.
+    def before_request(self, method, request_kwargs):
+        """This method can be overridden to customize each request.
         Note: request_kwargs contains ONLY the kwargs that were straightly
         given in the call. Example: `api.resource.get(kwarg1=1)` the dict
         would be: `{'kwarg1': 1}`
 
         request_kwargs must be returned. It is used when calling HTTP method
         for resource. These returned kwargs will be added on top of
-        self._request_kwargs.
+        self._default_kwargs.
         """
         return request_kwargs
 
     def after_request(self, response):
-        """This method can be used to add default behavior when response
+        """This method can be overridden to add default behavior when response
         is returned. For example if you're working with a JSON API, you can
         return deserialized JSON from this method instead of `Response` object.
         The returned value will be returned to HTTP method caller.
         """
         return response
+
+    def default_kwargs(self):
+        """Returns kwargs which are default for each request. This can
+        be overridden to modify default kwargs.
+        """
+        return self._default_kwargs
 
     def _ensure_trailing_slash(self, text):
         return text if text.endswith('/') else text + '/'
@@ -54,46 +64,48 @@ class Api(object):
         return text[1:] if text.startswith('/') else text
 
     def _new_resource(self, resource):
+        """Create new Resource object with correct url."""
         resource_name = self._remove_leading_slash(resource)
         if self._traling_slash:
             resource_name = self._ensure_trailing_slash(resource_name)
 
-        return Resource(
-            self._api_url,
-            resource_name,
-            self._request_kwargs,
-            self.before_request,
-            self.after_request)
+        return Resource(self._api_url + resource_name, self)
 
 
 class Resource(object):
 
     # Allowed methods from requests call API
-    ALLOWED_METHODS = ['head', 'get', 'post', 'put', 'patch', 'delete']
+    ALLOWED_METHODS = [
+        'HEAD',
+        'GET',
+        'POST',
+        'PUT',
+        'PATCH',
+        'DELETE'
+    ]
 
-    def __init__(self, api_url, resource, request_kwargs,
-                 before_request, after_request):
-        self._api_url = api_url
-        self._resource = resource
-        self._request_kwargs = request_kwargs
-        self._before_request = before_request
-        self._after_request = after_request
+    def __init__(self, full_url, api):
+        self._full_url = full_url
+        self._api = api
 
     def __getattr__(self, http_method):
         """If class' attribute is accessed and it does not exist, this
         method will be called.
         """
-        if http_method not in self.ALLOWED_METHODS:
+        if http_method.upper() not in self.ALLOWED_METHODS:
             raise AttributeError('%r object has no attribute %r' %
                                  (self.__class__.__name__, http_method))
 
-        request_func = getattr(requests, http_method)
+        def wrapper(**kwargs):
+            # Add default kwargs with possible custom kwargs returned by
+            # before_request
+            new_kwargs = self._api.default_kwargs().copy()
+            custom_kwargs = self._api.before_request(http_method, kwargs.copy())
+            new_kwargs.update(custom_kwargs)
 
-        def wrapper(*args, **kwargs):
-            full_url = self._api_url + self._resource
-            new_kwargs = self._request_kwargs.copy()
-            new_kwargs.update(self._before_request(kwargs.copy(), http_method))
-            response = request_func(full_url, *args, **new_kwargs)
-            return self._after_request(response)
+            method = http_method.upper()
+            response = requests.request(method, self._full_url, **new_kwargs)
+
+            return self._api.after_request(response)
 
         return wrapper
