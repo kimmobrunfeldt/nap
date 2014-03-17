@@ -1,6 +1,9 @@
 # Developer documentation
 
-Documentation for Nap developer
+To get started, install requirements with *pip*:
+
+  pip install -r requirements.txt
+  pip install -r requirements-dev.txt
 
 ## Basic tasks
 
