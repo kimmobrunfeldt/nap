@@ -116,7 +116,7 @@ class public(Api):
     # This will take all keyword arguments given to `nap.api.Api.resource.get()`
     # and assume they are parameters for the HTTP request, not parameters
     # to be passed to `requests` module.
-    def before_request(self, kwargs, method):
+    def before_request(self, method, kwargs):
         return {'params': kwargs}
 
     def after_request(self, response):
