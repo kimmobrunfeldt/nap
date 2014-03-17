@@ -60,9 +60,6 @@ class Api(object):
     def _ensure_trailing_slash(self, text):
         return text if text.endswith('/') else text + '/'
 
-    def _ensure_no_trailing_slash(self, text):
-        return text[:-1] if text.endswith('/') else text
-
     def _remove_leading_slash(self, text):
         return text[1:] if text.startswith('/') else text
 
