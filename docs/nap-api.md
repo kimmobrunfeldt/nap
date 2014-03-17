@@ -7,7 +7,7 @@ Reference documentation
 * `api_url` API's base url. Trailing slash is optional. For example `'https://api.github.com'`
 * `trailing_slash` If *True*, every request will contain trailing slash in the final requested url.
     Trailing slash `https://api.github.com/users/`. No trailing slash `https://api.github.com/users`.
-* `**default_kwargs` Keyword arguments that will be passed to [requests' method](http://docs.python-requests.org/en/latest/api/#requests.head) on each request
+* `**default_kwargs` Keyword arguments that will be passed to [requests' method](http://docs.python-requests.org/en/latest/api/#requests.request) on each request
 
 This class has special behaviour with its methods - each method will be dynamically mapped to a [Resource](#napapiresourcefull_url-api) instance.
 
@@ -25,7 +25,7 @@ api('resource').get()
 * `method` The HTTP method of request in upper case. For example `'GET'`.
 * `request_kwargs` Keyword arguments that were passed to the request method. This does not contain the default keyword arguments given when initializing Api class. For example in `api.resource.get(verify=False)`, the value would be `{'verify': False}`.
 
-This method should return keyword arguments. These returned kwargs will be added on top of default request_kwargs given to class. The sum of both keyword arguments will be passed to [requests' method](http://docs.python-requests.org/en/latest/api/#requests.head).
+This method should return keyword arguments. These returned kwargs will be added on top of default request_kwargs given to class. The sum of both keyword arguments will be passed to [requests' method](http://docs.python-requests.org/en/latest/api/#requests.request).
 
 #### Api.after_request(response)
 
