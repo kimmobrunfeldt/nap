@@ -88,23 +88,30 @@ class Resource(object):
         self._full_url = full_url
         self._api = api
 
-    def __getattr__(self, http_method):
+    def __getattr__(self, method):
         """If class' attribute is accessed and it does not exist, this
         method will be called.
         """
-        method = http_method.upper()
-        if http_method.upper() not in self.ALLOWED_METHODS:
+        http_method = method.upper()
+        if http_method not in self.ALLOWED_METHODS:
             raise AttributeError('%r object has no attribute %r' %
-                                 (self.__class__.__name__, http_method))
+                                 (self.__class__.__name__, method))
 
         def wrapper(**kwargs):
             # Add default kwargs with possible custom kwargs returned by
             # before_request
             new_kwargs = self._api.default_kwargs().copy()
-            custom_kwargs = self._api.before_request(method, kwargs.copy())
+            custom_kwargs = self._api.before_request(
+                http_method,
+                kwargs.copy()
+            )
             new_kwargs.update(custom_kwargs)
 
-            response = requests.request(method, self._full_url, **new_kwargs)
+            response = requests.request(
+                http_method,
+                self._full_url,
+                **new_kwargs
+            )
 
             return self._api.after_request(response)
 
