@@ -23,7 +23,7 @@ readme = """Read docs from GitHub_
 
 setup(
     name='nap',
-    version='0.2.1-dev',
+    version='0.2.2',
     description='Clean way to request HTTP API resources',
     long_description=readme,
     author='Kimmo Brunfeldt',
