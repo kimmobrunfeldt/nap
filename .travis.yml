@@ -17,7 +17,7 @@ notifications:
 deploy:
   # https://github.com/travis-ci/dpl#pypi
   provider: pypi
-  distributions: 'sdist bdist'
+  distributions: 'sdist bdist_wheel'
   docs_dir: docs
   user: kimmobrunfeldt
   password:
