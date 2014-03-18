@@ -30,7 +30,7 @@ clean-coverage:
 	rm -f .coverage
 
 lint:
-	flake8 nap test
+	flake8 --exclude=__init__.py nap test
 
 test:
 	py.test
