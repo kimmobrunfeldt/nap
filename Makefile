@@ -9,7 +9,9 @@ help:
 	@echo "test - run tests quickly with the default Python"
 	@echo "test-all - run tests on every Python version with tox"
 	@echo "coverage - check code coverage quickly with the default Python"
-	@echo "release - package and upload a release. This makes a patch release"
+	@echo "release - package and upload a release. This makes a patch release by default"
+	@echo "          you can give bump parameter, valid values: patch, minor, major"
+	@echo "          for example: make release bump=minor"
 	@echo "dist - package"
 
 clean: clean-build clean-pyc clean-coverage
@@ -40,7 +42,7 @@ coverage:
 	py.test --cov nap -v --cov-report term-missing
 
 release: clean coverage test-all
-	python scripts/make-release.py
+	python scripts/make-release.py $(bump)
 
 dist: clean
 	python setup.py sdist

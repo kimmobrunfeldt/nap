@@ -1,16 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-    Copied from: https://raw.githubusercontent.com/mitsuhiko/flask/master/scripts/make-release.py
+Usage: python make-release.py [bump]
 
-    make-release
-    ~~~~~~~~~~~~
+bump parameter is optional, default is patch. Valid values are patch, minor, major.
 
-    Helper script that performs a release.  Does pretty much everything
-    automatically for us.
+Copied from: https://raw.githubusercontent.com/mitsuhiko/flask/master/scripts/make-release.py
 
-    :copyright: (c) 2014 by Armin Ronacher.
-    :license: BSD, see LICENSE for more details.
+make-release
+~~~~~~~~~~~~
+
+Helper script that performs a release.  Does pretty much everything
+automatically for us.
+
+:copyright: (c) 2014 by Armin Ronacher.
+:license: BSD, see LICENSE for more details.
 """
 import sys
 import os
@@ -18,19 +22,19 @@ import re
 from subprocess import Popen, PIPE
 
 
-def bump_version(version, patch='patch'):
+def bump_version(version, bump='patch'):
     """patch: patch, minor, major"""
     try:
         parts = map(int, version.split('.'))
     except ValueError:
         fail('Current version is not numeric')
 
-    if patch == 'patch':
+    if bump == 'patch':
         parts[2] += 1
-    elif patch == 'minor':
+    elif bump == 'minor':
         parts[1] += 1
         parts[2] = 0
-    elif patch == 'major':
+    elif bump == 'major':
         parts[0] +=1
         parts[1] = 0
         parts[2] = 0
@@ -107,6 +111,15 @@ def make_git_tag(tag):
 
 
 def main():
+    bump = 'patch'
+    # If bump parameter is specified
+    if len(sys.argv) > 2:
+        bump = sys.argv[3]
+        if bump not in ['patch', 'minor', 'major']:
+            print('bump parameter is incorrect')
+            print('possible values: patch, minor major')
+            sys.exit(1)
+
     os.chdir(os.path.join(os.path.dirname(__file__), '..'))
     sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
@@ -118,7 +131,7 @@ def main():
     else:
         fail('Current version is not dev, %s' % current_version_dev)
 
-    new_version = bump_version(current_version)
+    new_version = bump_version(current_version, bump=bump)
     dev_version = new_version + '-dev'
 
     info('Releasing %s', new_version)
