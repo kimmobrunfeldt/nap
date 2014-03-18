@@ -113,8 +113,8 @@ def make_git_tag(tag):
 def main():
     bump = 'patch'
     # If bump parameter is specified
-    if len(sys.argv) > 2:
-        bump = sys.argv[3]
+    if len(sys.argv) > 1:
+        bump = sys.argv[1]
         if bump not in ['patch', 'minor', 'major']:
             print('bump parameter is incorrect')
             print('possible values: patch, minor major')
