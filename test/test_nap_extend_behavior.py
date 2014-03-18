@@ -67,4 +67,3 @@ class TestNapInherit(unittest.TestCase):
             # of default_kwargs and request_kwargs are separated
             test='test'
         )
-
