@@ -2,8 +2,16 @@
 Easy HTTP API calling.
 """
 
+import sys
+
+_PY3 = sys.version_info >= (3, 0)
+
+if _PY3:
+    from urllib.parse import urljoin
+else:
+    from urlparse import urljoin
+
 import requests
-import urlparse
 
 
 class Url(object):
@@ -90,7 +98,7 @@ class Url(object):
 
     def _join_url(self, relative_url):
         """Joins relative url with base url. Adds trailing slash if needed."""
-        joined_url = urlparse.urljoin(self._url, relative_url)
+        joined_url = urljoin(self._url, relative_url)
         if self._add_trailing_slash:
             joined_url = self._ensure_trailing_slash(joined_url)
 
@@ -106,7 +114,7 @@ class Url(object):
         """Create new Url which points to new url."""
 
         return Url(
-            urlparse.urljoin(self._url, relative_url),
+            urljoin(self._url, relative_url),
             add_trailing_slash=self._add_trailing_slash,
             **self._default_kwargs
         )
