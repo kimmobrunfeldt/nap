@@ -4,9 +4,9 @@ Reference documentation
 
 ## nap.url
 
-### [class Url(url, \*\*default_kwargs)](/nap/url.py#L20)
+### [class Url(base_url, \*\*default_kwargs)](/nap/url.py#L20)
 
-* `url`
+* `base_url`
     Base url. Trailing slash is optional.
     For example `'https://api.github.com'`
 
