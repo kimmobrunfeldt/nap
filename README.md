@@ -29,7 +29,7 @@ api.get('users/kimmobrunfeldt')
 
 * Look through [examples](#examples)
 * See [API documentation](docs/nap-api.md)
-* [Dive into code](docs/api.py)
+* [Dive into code](nap/url.py)
 
 
 ## Install
