@@ -9,7 +9,7 @@
 
 **Example**
 
-<!-- <test-example> -->
+<!-- <egtest> -->
 ```python
 from nap.url import Url
 api = Url('https://api.github.com/')
@@ -23,7 +23,7 @@ users.get('kimmobrunfeldt')
 # Or you could just call
 api.get('users/kimmobrunfeldt')
 ```
-<!-- </test-example> -->
+<!-- </egtest> -->
 
 **Get started**
 
@@ -58,19 +58,19 @@ See [API documentation](docs/nap-api.md)
 
 Example with authentication. All authentications supported by *requests* are automatically supported.
 
-<!-- <test-example> -->
+<!-- <egtest> -->
 ```python
 from nap.url import Url
 users = Url('https://api.github.com/users/')
 
-response = users.get('kimmobrunfeldt, auth=('user', 'pass'))
+response = users.get('kimmobrunfeldt', auth=('user', 'pass'))
 print(response.json())
 ```
-<!-- </test-example> -->
+<!-- </egtest> -->
 
 You can also specify default keyword arguments to be passed on every request in *Url* initialization:
 
-<!-- <test-example> -->
+<!-- <egtest> -->
 ```python
 from nap.url import Url
 # Keyword arguments given to Url will be given to each request method
@@ -84,11 +84,11 @@ print(response.json())
 # You can also override the default keyword arguments afterwords
 response = api.get('users/kimmobrunfeldt', auth=('kimmo', 'password1'))
 ```
-<!-- </test-example> -->
+<!-- </egtest> -->
 
 Automatically convert all JSON responses to Python dict objects
 
-<!-- <test-example> -->
+<!-- <egtest> -->
 ```python
 from nap.url import Url
 
@@ -99,13 +99,13 @@ class JsonApi(Url):
 
         return response.json()
 
-api = JsonApi('https://api.github.com/', auth=('user', 'pass'))
+api = JsonApi('https://api.github.com/')
 
 # Get authenticated user
-user = api.get('user')  # user is dict object containing parsed JSON
-print(response)
+user = api.get('users')  # user is dict object containing parsed JSON
+print(user)
 ```
-<!-- </test-example> -->
+<!-- </egtest> -->
 
 
 ## Contributing
