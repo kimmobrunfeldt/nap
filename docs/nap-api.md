@@ -31,8 +31,6 @@ Uses [requests.request][] to send `HEAD` request.
     Keyword arguments are passed to *requests.request* function.
     Check [requests.request][] documentation.
 
-**Example**
-
 ```python
 api.head('path')  # HEAD https://api.github.com/path
 ```
@@ -48,10 +46,8 @@ Uses [requests.request][] to send `GET` request.
     Keyword arguments are passed to *requests.request* function.
     Check [requests.request][] documentation.
 
-**Example**
-
 ```python
-api.head('path')  # GET https://api.github.com/path
+api.get('path')  # GET https://api.github.com/path
 ```
 
 #### .post(relative_url='', **kwargs)
@@ -65,10 +61,8 @@ Uses [requests.request][] to send `POST` request.
     Keyword arguments are passed to *requests.request* function.
     Check [requests.request][] documentation.
 
-**Example**
-
 ```python
-api.head('path')  # POST https://api.github.com/path
+api.post('path')  # POST https://api.github.com/path
 ```
 
 #### .put(relative_url='', **kwargs)
@@ -82,10 +76,8 @@ Uses [requests.request][] to send `PUT` request.
     Keyword arguments are passed to *requests.request* function.
     Check [requests.request][] documentation. that `url` and `method` parameters are passed automatically.
 
-**Example**
-
 ```python
-api.head('path')  # PUT https://api.github.com/path
+api.put('path')  # PUT https://api.github.com/path
 ```
 
 #### .patch(relative_url='', **kwargs)
@@ -99,10 +91,8 @@ Uses [requests.request][] to send `PATCH` request.
     Keyword arguments are passed to *requests.request* function.
     Check [requests.request][] documentation.
 
-**Example**
-
 ```python
-api.head('path')  # PATCH https://api.github.com/path
+api.patch('path')  # PATCH https://api.github.com/path
 ```
 
 #### .delete(relative_url='', **kwargs)
@@ -116,10 +106,8 @@ Uses [requests.request][] to send `DELETE` request.
     Keyword arguments are passed to *requests.request* function.
     Check [requests.request][] documentation.
 
-**Example**
-
 ```python
-api.head('path')  # DELETE https://api.github.com/path
+api.delete('path')  # DELETE https://api.github.com/path
 ```
 
 #### .before_request(method, request_kwargs)
