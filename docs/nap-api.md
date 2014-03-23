@@ -123,4 +123,4 @@ This method can be overridden to modify `default_kwargs` given in class initiali
 Returns new default kwargs.
 
 
-[requests-request]: See http://docs.python-requests.org/en/latest/api/#requests.request     "requests.request"
+[requests-request]: http://docs.python-requests.org/en/latest/api/#requests.request     "requests.request"
