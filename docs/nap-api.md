@@ -2,7 +2,7 @@
 
 Reference documentation
 
-### [nap.url.Url(url, \*\*default_kwargs)](/nap/url.py)
+### [class nap.url.Url(url, \*\*default_kwargs)](/nap/url.py#L20)
 
 * `url`
     Base url. Trailing slash is optional.
