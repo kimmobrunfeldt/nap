@@ -83,6 +83,28 @@ response = api.get('users/kimmobrunfeldt', auth=('kimmo', 'password1'))
 ```
 <!-- </test-example> -->
 
+Automatically convert all JSON responses to Python dict objects
+
+<!-- <test-example> -->
+```python
+from nap.url import Url
+
+class JsonApi(Url):
+    def after_request(self, response):
+        if response.status_code != 200:
+            response.raise_for_status()
+
+        return response.json()
+
+api = JsonApi('https://api.github.com/', auth=('user', 'pass'))
+
+# Get authenticated user
+user = api.get('user')  # user is dict object containing parsed JSON
+print(response)
+```
+<!-- </test-example> -->
+
+
 ## Contributing
 
 [Documentation for Nap developers](docs/)
