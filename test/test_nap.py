@@ -32,7 +32,6 @@ class TestNap(unittest.TestCase):
         """Test that original options are correctly passed to joined urls"""
         url = Url(
             'http://domain.com',
-            add_trailing_slash=True,
             auth=('user', 'pass')
         )
         r_request = MagicMock(return_value=None)
@@ -41,7 +40,7 @@ class TestNap(unittest.TestCase):
         new_url.get()
         requests.request.assert_called_with(
             'GET',
-            'http://domain.com/path/',
+            'http://domain.com/path',
             auth=('user', 'pass')
         )
 
@@ -95,32 +94,6 @@ class TestNap(unittest.TestCase):
             'GET',
             'http://domain.com/resource',
             auth=('defaults', 'overriden')
-        )
-
-    @patch('requests.request')
-    def test_trailing_slash(self, r_request):
-        """Test that trailing slash will be automatically removed/added"""
-        url = Url('http://domain.com')
-        r_request = MagicMock(return_value=None)
-
-        # By default slash will not modified anyhow
-        url.get('resource')
-        requests.request.assert_called_with(
-            'GET',
-            'http://domain.com/resource'
-        )
-
-        url.get('resource/')
-        requests.request.assert_called_with(
-            'GET',
-            'http://domain.com/resource/'
-        )
-
-        url_add_slash = Url('http://domain.com', add_trailing_slash=True)
-        url_add_slash.get('resource')
-        requests.request.assert_called_with(
-            'GET',
-            'http://domain.com/resource/'
         )
 
     def test_all_methods(self):

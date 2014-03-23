@@ -6,6 +6,7 @@ import sys
 
 _PY3 = sys.version_info >= (3, 0)
 
+# For Python 3 compatibility
 if _PY3:
     from urllib.parse import urljoin
 else:
@@ -17,9 +18,17 @@ import requests
 class Url(object):
     """Wrapper class for requests library."""
 
-    def __init__(self, url, add_trailing_slash=False, **default_kwargs):
+    def __init__(self, url, **default_kwargs):
+        """
+        `url`
+            API's base url. Trailing slash is optional.
+            For example `'https://api.github.com'`
+
+        `**default_kwargs`
+            Keyword arguments that will be passed to
+            `requests.request` on each request
+        """
         self._url = url
-        self._add_trailing_slash = add_trailing_slash
         self._default_kwargs = default_kwargs
 
     def before_request(self, method, request_kwargs):
@@ -99,13 +108,7 @@ class Url(object):
     def _join_url(self, relative_url):
         """Joins relative url with base url. Adds trailing slash if needed."""
         joined_url = urljoin(self._url, relative_url)
-        if self._add_trailing_slash:
-            joined_url = self._ensure_trailing_slash(joined_url)
-
         return joined_url
-
-    def _ensure_trailing_slash(self, text):
-        return text if text.endswith('/') else text + '/'
 
     def _remove_leading_slash(self, text):
         return text[1:] if text.startswith('/') else text
@@ -115,6 +118,5 @@ class Url(object):
 
         return Url(
             urljoin(self._url, relative_url),
-            add_trailing_slash=self._add_trailing_slash,
             **self._default_kwargs
         )
