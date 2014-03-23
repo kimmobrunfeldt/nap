@@ -9,19 +9,61 @@ from mock import MagicMock, patch
 import unittest
 import requests
 
-from nap.api import Api
-from nap.api import Resource
+from nap.url import Url
 
 
 class TestNap(unittest.TestCase):
 
-    def test_unallowed_method(self):
-        """Tries to use non-existent HTTP method"""
-        api = Api('')
+    @patch('requests.request')
+    def test_join_urls(self, r_request):
+        """Test creating new sub-Urls"""
+        url = Url('http://domain.com')
+        r_request = MagicMock(return_value=None)
 
-        # lambda trickery is necessary, because otherwise it would raise
-        # AttributeError uncontrolled
-        self.assertRaises(AttributeError, lambda: api.resource.nonexisting)
+        new_url = url.join('/path/a/b')
+        new_url.get()
+        requests.request.assert_called_with(
+            'GET',
+            'http://domain.com/path/a/b'
+        )
+
+    @patch('requests.request')
+    def test_joined_urls_option_passing(self, r_request):
+        """Test that original options are correctly passed to joined urls"""
+        url = Url(
+            'http://domain.com',
+            add_trailing_slash=True,
+            auth=('user', 'pass')
+        )
+        r_request = MagicMock(return_value=None)
+
+        new_url = url.join('path')
+        new_url.get()
+        requests.request.assert_called_with(
+            'GET',
+            'http://domain.com/path/',
+            auth=('user', 'pass')
+        )
+
+    @patch('requests.request')
+    def test_join_url_preserves_original_url(self, r_request):
+        """Test that original url is not touched when joining urls."""
+        url = Url('http://domain.com/')
+        r_request = MagicMock(return_value=None)
+
+        new_url = url.join('/path')
+        new_url.get()
+        requests.request.assert_called_with(
+            'GET',
+            'http://domain.com/path'
+        )
+
+        new_url = url.join('/path/')
+        new_url.get()
+        requests.request.assert_called_with(
+            'GET',
+            'http://domain.com/path/'
+        )
 
     def test_requests_raises_error(self):
         """Test that requests properly raises its own errors
@@ -30,72 +72,69 @@ class TestNap(unittest.TestCase):
         requests.exceptions.MissingSchema: Invalid URL u'/kk':
         No schema supplied. Perhaps you meant http:///kk?
         """
-        api = Api('')
-        self.assertRaises(requests.exceptions.MissingSchema, api.resource.get)
-
-    def test_resource_not_callable(self):
-        """Make sure resource can't be called directly"""
-        api = Api('')
-        self.assertRaises(TypeError, api.resource)
+        url = Url('')
+        self.assertRaises(requests.exceptions.MissingSchema, url.get)
 
     @patch('requests.request')
     def test_default_parameters(self, r_request):
         """Test default parameter behavior"""
-        api = Api('', auth=('user', 'password'))
+        url = Url('http://domain.com', auth=('user', 'password'))
         r_request = MagicMock(return_value=None)
 
         # Make sure defaults are passed for each request
-        api.resource.get()
+        url.get('resource')
         requests.request.assert_called_with(
             'GET',
-            '/resource',
+            'http://domain.com/resource',
             auth=('user', 'password')
         )
 
         # Make sure single calls can override defaults
-        api.resource.get(auth=('defaults', 'overriden'))
+        url.get('resource', auth=('defaults', 'overriden'))
         requests.request.assert_called_with(
             'GET',
-            '/resource',
+            'http://domain.com/resource',
             auth=('defaults', 'overriden')
         )
 
     @patch('requests.request')
     def test_trailing_slash(self, r_request):
         """Test that trailing slash will be automatically removed/added"""
-        api = Api('')
+        url = Url('http://domain.com')
         r_request = MagicMock(return_value=None)
 
         # By default slash will not modified anyhow
-        api('resource').get()
+        url.get('resource')
         requests.request.assert_called_with(
             'GET',
-            '/resource'
+            'http://domain.com/resource'
         )
 
-        api('resource/').get()
+        url.get('resource/')
         requests.request.assert_called_with(
             'GET',
-            '/resource/'
+            'http://domain.com/resource/'
         )
 
-        api_add_slash = Api('', add_trailing_slash=True)
-        api_add_slash('resource').get()
+        url_add_slash = Url('http://domain.com', add_trailing_slash=True)
+        url_add_slash.get('resource')
         requests.request.assert_called_with(
             'GET',
-            '/resource/'
+            'http://domain.com/resource/'
         )
 
     @patch('requests.request')
     def test_all_methods(self, r_request):
         """Test all HTTP methods"""
-        api = Api('')
+        url = Url('http://domain.com')
         r_request = MagicMock(return_value=None)
 
-        for method in Resource.ALLOWED_METHODS:
-            getattr(api.resource, method.lower())()
+        methods = ['delete', 'get', 'head', 'patch', 'post', 'put']
+
+        for method in methods:
+            getattr(url, method.lower())()
 
             requests.request.assert_called_with(
-                method,
-                '/resource'
+                method.upper(),
+                'http://domain.com'
             )
