@@ -1,8 +1,10 @@
-## Nap API documentation
+# Nap API documentation
 
 Reference documentation
 
-### [class nap.url.Url(url, \*\*default_kwargs)](/nap/url.py#L20)
+## nap.url module
+
+### [class Url(url, \*\*default_kwargs)](/nap/url.py#L20)
 
 * `url`
     Base url. Trailing slash is optional.
@@ -14,6 +16,7 @@ Reference documentation
 
 Example
 ```python
+from nap.url import Url
 api = Url('https://api.github.com/', auth=('kimmo', 'pass'))
 ```
 
