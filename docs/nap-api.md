@@ -12,7 +12,7 @@ Reference documentation
 
 * `**default_kwargs`
     Keyword arguments that will be passed to
-    `requests.request` on each request
+    [requests-request][] on each request
 
 Example
 ```python
@@ -22,69 +22,69 @@ api = Url('https://api.github.com/', auth=('kimmo', 'pass'))
 
 #### .head(relative_url='', **kwargs)
 
-Uses [requests.request][] to send `HEAD` request.
+Uses [requests-request][] to send `HEAD` request.
 
 * `relative_url`
     Requested url will be base url and `relative_url` joined together.
 
 * `**kwargs`
     Keyword arguments are passed to *requests.request* function.
-    Check [requests.request][] documentation.
+    Check [requests-request][] documentation.
 
 #### .get(relative_url='', **kwargs)
 
-Uses [requests.request][] to send `HEAD` request.
+Uses [requests-request][] to send `HEAD` request.
 
 * `relative_url`
     Requested url will be base url and `relative_url` joined together.
 
 * `**kwargs`
     Keyword arguments are passed to *requests.request* function.
-    Check [requests.request][] documentation.
+    Check [requests-request][] documentation.
 
 #### .post(relative_url='', **kwargs)
 
-Uses [requests.request][] to send `POST` request.
+Uses [requests-request][] to send `POST` request.
 
 * `relative_url`
     Requested url will be base url and `relative_url` joined together.
 
 * `**kwargs`
     Keyword arguments are passed to *requests.request* function.
-    Check [requests.request][] documentation.
+    Check [requests-request][] documentation.
 
 #### .put(relative_url='', **kwargs)
 
-Uses [requests.request][] to send `PUT` request.
+Uses [requests-request][] to send `PUT` request.
 
 * `relative_url`
     Requested url will be base url and `relative_url` joined together.
 
 * `**kwargs`
     Keyword arguments are passed to *requests.request* function.
-    Check [requests.request][] documentation. that `url` and `method` parameters are passed automatically.
+    Check [requests-request][] documentation. that `url` and `method` parameters are passed automatically.
 
 #### .patch(relative_url='', **kwargs)
 
-Uses [requests.request][] to send `PATCH` request.
+Uses [requests-request][] to send `PATCH` request.
 
 * `relative_url`
     Requested url will be base url and `relative_url` joined together.
 
 * `**kwargs`
     Keyword arguments are passed to *requests.request* function.
-    Check [requests.request][] documentation.
+    Check [requests-request][] documentation.
 
 #### .delete(relative_url='', **kwargs)
 
-Uses [requests.request][] to send `DELETE` request.
+Uses [requests-request][] to send `DELETE` request.
 
 * `relative_url`
     Requested url will be base url and `relative_url` joined together.
 
 * `**kwargs`
     Keyword arguments are passed to *requests.request* function.
-    Check [requests.request][] documentation.
+    Check [requests-request][] documentation.
 
 #### .before_request(method, request_kwargs)
 
@@ -101,7 +101,7 @@ This method can be overridden to customize each request.
 
 This method should return keyword arguments. These returned kwargs will be
 added on top of default request_kwargs given to class. The sum of both keyword
-arguments will be passed to [requests.request][].
+arguments will be passed to [requests-request][].
 
 #### .after_request(response)
 
