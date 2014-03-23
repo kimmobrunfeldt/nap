@@ -14,7 +14,7 @@ Reference documentation
     Keyword arguments that will be passed to
     [requests.request][] on each request
 
-Example
+**Example**
 ```python
 from nap.url import Url
 api = Url('https://api.github.com/', auth=('kimmo', 'pass'))
@@ -25,66 +25,102 @@ api = Url('https://api.github.com/', auth=('kimmo', 'pass'))
 Uses [requests.request][] to send `HEAD` request.
 
 * `relative_url`
-    Requested url will be base url and `relative_url` joined together.
+    Relative url to base url which should be requested.
 
 * `**kwargs`
     Keyword arguments are passed to *requests.request* function.
     Check [requests.request][] documentation.
+
+**Example**
+
+```python
+api.head('path')  # HEAD https://api.github.com/path
+```
 
 #### .get(relative_url='', **kwargs)
 
-Uses [requests.request][] to send `HEAD` request.
+Uses [requests.request][] to send `GET` request.
 
 * `relative_url`
-    Requested url will be base url and `relative_url` joined together.
+    Relative url to base url which should be requested.
 
 * `**kwargs`
     Keyword arguments are passed to *requests.request* function.
     Check [requests.request][] documentation.
+
+**Example**
+
+```python
+api.head('path')  # GET https://api.github.com/path
+```
 
 #### .post(relative_url='', **kwargs)
 
 Uses [requests.request][] to send `POST` request.
 
 * `relative_url`
-    Requested url will be base url and `relative_url` joined together.
+    Relative url to base url which should be requested.
 
 * `**kwargs`
     Keyword arguments are passed to *requests.request* function.
     Check [requests.request][] documentation.
+
+**Example**
+
+```python
+api.head('path')  # POST https://api.github.com/path
+```
 
 #### .put(relative_url='', **kwargs)
 
 Uses [requests.request][] to send `PUT` request.
 
 * `relative_url`
-    Requested url will be base url and `relative_url` joined together.
+    Relative url to base url which should be requested.
 
 * `**kwargs`
     Keyword arguments are passed to *requests.request* function.
     Check [requests.request][] documentation. that `url` and `method` parameters are passed automatically.
+
+**Example**
+
+```python
+api.head('path')  # PUT https://api.github.com/path
+```
 
 #### .patch(relative_url='', **kwargs)
 
 Uses [requests.request][] to send `PATCH` request.
 
 * `relative_url`
-    Requested url will be base url and `relative_url` joined together.
+    Relative url to base url which should be requested.
 
 * `**kwargs`
     Keyword arguments are passed to *requests.request* function.
     Check [requests.request][] documentation.
+
+**Example**
+
+```python
+api.head('path')  # PATCH https://api.github.com/path
+```
 
 #### .delete(relative_url='', **kwargs)
 
 Uses [requests.request][] to send `DELETE` request.
 
 * `relative_url`
-    Requested url will be base url and `relative_url` joined together.
+    Relative url to base url which should be requested.
 
 * `**kwargs`
     Keyword arguments are passed to *requests.request* function.
     Check [requests.request][] documentation.
+
+**Example**
+
+```python
+api.head('path')  # DELETE https://api.github.com/path
+```
 
 #### .before_request(method, request_kwargs)
 
