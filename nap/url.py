@@ -20,9 +20,9 @@ import requests
 class Url(object):
     """Wrapper class for requests library."""
 
-    def __init__(self, url, **default_kwargs):
+    def __init__(self, base_url, **default_kwargs):
         """
-        * `url`
+        * `base_url`
             API's base url. Trailing slash is optional.
             For example `'https://api.github.com'`
 
@@ -30,11 +30,11 @@ class Url(object):
             Keyword arguments that will be passed to
             `requests.request` on each request
         """
-        self._url = url
+        self._base_url = base_url
         self._default_kwargs = default_kwargs
 
     def join(self, relative_url):
-        """Join initial url with a new relative url and return new Url object
+        """Joins base url with relative_url and returns new Url object
         from the combined url.
         """
         return self._new_url(relative_url)
@@ -42,45 +42,21 @@ class Url(object):
     # HTTP methods
 
     def delete(self, *args, **kwargs):
-        """See http://docs.python-requests.org/en/latest/api/#requests.request
-        Only difference is that `url` and `method` parameters are
-        passed automatically.
-        """
         return self._request('DELETE', *args, **kwargs)
 
     def get(self, *args, **kwargs):
-        """See http://docs.python-requests.org/en/latest/api/#requests.request
-        Only difference is that `url` and `method` parameters are
-        passed automatically.
-        """
         return self._request('GET', *args, **kwargs)
 
     def head(self, *args, **kwargs):
-        """See http://docs.python-requests.org/en/latest/api/#requests.request
-        Only difference is that `url` and `method` parameters are
-        passed automatically.
-        """
         return self._request('HEAD', *args, **kwargs)
 
     def patch(self, *args, **kwargs):
-        """See http://docs.python-requests.org/en/latest/api/#requests.request
-        Only difference is that `url` and `method` parameters are
-        passed automatically.
-        """
         return self._request('PATCH', *args, **kwargs)
 
     def post(self, *args, **kwargs):
-        """See http://docs.python-requests.org/en/latest/api/#requests.request
-        Only difference is that `url` and `method` parameters are
-        passed automatically.
-        """
         return self._request('POST', *args, **kwargs)
 
     def put(self, *args, **kwargs):
-        """See http://docs.python-requests.org/en/latest/api/#requests.request
-        Only difference is that `url` and `method` parameters are
-        passed automatically.
-        """
         return self._request('PUT', *args, **kwargs)
 
     # Overridable methods to extend behavior
@@ -118,7 +94,7 @@ class Url(object):
 
     def default_kwargs(self):
         """This method can be overridden to modify `default_kwargs` given in
-        class initialization. modification.
+        class initialization.
 
         Returns new default kwargs.
         """
@@ -150,7 +126,7 @@ class Url(object):
 
     def _join_url(self, relative_url):
         """Joins relative url with base url. Adds trailing slash if needed."""
-        joined_url = urljoin(self._url, relative_url)
+        joined_url = urljoin(self._base_url, relative_url)
         return joined_url
 
     def _remove_leading_slash(self, text):
@@ -160,6 +136,6 @@ class Url(object):
         """Create new Url which points to new url."""
 
         return Url(
-            urljoin(self._url, relative_url),
+            urljoin(self._base_url, relative_url),
             **self._default_kwargs
         )
