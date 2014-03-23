@@ -20,6 +20,18 @@ from nap.url import Url
 api = Url('https://api.github.com/', auth=('kimmo', 'pass'))
 ```
 
+#### .join(relative_url='')
+
+Joins base url with `relative_url` and returns new [Url](#class-urlurl-default_kwargs) instance
+initialized with the combined url.
+
+All `default_kwargs` given in first initialization are passed to new *Url* instance.
+
+```python
+api = Url('https://api.github.com/', auth=('kimmo', 'pass'))
+users = api.join('users')
+```
+
 #### .head(relative_url='', **kwargs)
 
 Uses [requests.request][] to send `HEAD` request.
