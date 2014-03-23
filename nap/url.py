@@ -20,42 +20,16 @@ class Url(object):
 
     def __init__(self, url, **default_kwargs):
         """
-        `url`
+        * `url`
             API's base url. Trailing slash is optional.
             For example `'https://api.github.com'`
 
-        `**default_kwargs`
+        * `**default_kwargs`
             Keyword arguments that will be passed to
             `requests.request` on each request
         """
         self._url = url
         self._default_kwargs = default_kwargs
-
-    def before_request(self, method, request_kwargs):
-        """This method can be overridden to customize each request.
-        Note: request_kwargs contains ONLY the kwargs that were straightly
-        given in the call. Example: `api.resource.get(kwarg1=1)` the dict
-        would be: `{'kwarg1': 1}`
-
-        request_kwargs must be returned. It is used when calling HTTP method
-        for resource. These returned kwargs will be added on top of
-        self._default_kwargs.
-        """
-        return request_kwargs
-
-    def after_request(self, response):
-        """This method can be overridden to add default behavior when response
-        is returned. For example if you're working with a JSON API, you can
-        return deserialized JSON from this method instead of `Response` object.
-        The returned value will be returned to HTTP method caller.
-        """
-        return response
-
-    def default_kwargs(self):
-        """Returns kwargs which are default for each request. This can
-        be overridden to modify default kwargs.
-        """
-        return self._default_kwargs
 
     def join(self, relative_url):
         """Join initial url with a new relative url and return new Url object
@@ -63,25 +37,92 @@ class Url(object):
         """
         return self._new_url(relative_url)
 
+    # HTTP methods
+
     def delete(self, *args, **kwargs):
-        return self.request('DELETE', *args, **kwargs)
+        """See http://docs.python-requests.org/en/latest/api/#requests.request
+        Only difference is that `url` and `method` parameters are
+        passed automatically.
+        """
+        return self._request('DELETE', *args, **kwargs)
 
     def get(self, *args, **kwargs):
-        return self.request('GET', *args, **kwargs)
+        """See http://docs.python-requests.org/en/latest/api/#requests.request
+        Only difference is that `url` and `method` parameters are
+        passed automatically.
+        """
+        return self._request('GET', *args, **kwargs)
 
     def head(self, *args, **kwargs):
-        return self.request('HEAD', *args, **kwargs)
+        """See http://docs.python-requests.org/en/latest/api/#requests.request
+        Only difference is that `url` and `method` parameters are
+        passed automatically.
+        """
+        return self._request('HEAD', *args, **kwargs)
 
     def patch(self, *args, **kwargs):
-        return self.request('PATCH', *args, **kwargs)
+        """See http://docs.python-requests.org/en/latest/api/#requests.request
+        Only difference is that `url` and `method` parameters are
+        passed automatically.
+        """
+        return self._request('PATCH', *args, **kwargs)
 
     def post(self, *args, **kwargs):
-        return self.request('POST', *args, **kwargs)
+        """See http://docs.python-requests.org/en/latest/api/#requests.request
+        Only difference is that `url` and `method` parameters are
+        passed automatically.
+        """
+        return self._request('POST', *args, **kwargs)
 
     def put(self, *args, **kwargs):
-        return self.request('PUT', *args, **kwargs)
+        """See http://docs.python-requests.org/en/latest/api/#requests.request
+        Only difference is that `url` and `method` parameters are
+        passed automatically.
+        """
+        return self._request('PUT', *args, **kwargs)
 
-    def request(self, http_method, relative_url='', **kwargs):
+    # Overridable methods to extend behavior
+
+    def before_request(self, method, request_kwargs):
+        """This method can be overridden to customize each request.
+
+        * `method`
+            The HTTP method of request in upper case. For example `'GET'`.
+
+        * `request_kwargs`
+            Keyword arguments that were passed to the request method.
+            This does not contain the default keyword arguments given when
+            initializing Api class. For example in `url.get(verify=False)`,
+            the value would be `{'verify': False}`.
+
+        This method should return keyword arguments. These returned kwargs
+        will be added on top of default request_kwargs given to class.
+        The sum of both keyword arguments will be passed to  `requests.request`
+        """
+        return request_kwargs
+
+    def after_request(self, response):
+        """This method can be overridden to add default behavior when response
+        is returned. For example if you're working with a JSON API, you can
+        return deserialized JSON from this method instead of `Response` object.
+
+        * `response`
+            `requests.Response` object returned by *request* function.
+
+        The returned value will be returned to the API method caller:
+        `response = api.get('users')`.
+        """
+        return response
+
+    def default_kwargs(self):
+        """This method can be overridden to modify `default_kwargs` given in
+        class initialization. modification.
+
+        Returns new default kwargs.
+        """
+        return self._default_kwargs
+
+    def _request(self, http_method, relative_url='', **kwargs):
         """Does actual HTTP request using requests library."""
         # It could be possible to call api.resource.get('/index')
         # but it would be non-intuitive that the path would resolve
