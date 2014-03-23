@@ -24,12 +24,18 @@ Example usage `make test`
 
 ## Making a release
 
-This makes a *patch* release.
+By default, `release` task makes a *patch* release.
 
 * Commit your changes
 * Run `make release`
 
     It will automatically update dev version to newer release version, push code and tags
+
+You can also specify *bump* parameter to `release` task:
+
+  make release bump=major
+
+Valid values: `major`, `minor`, `patch`.
 
 * Add release notes to GitHub
 
