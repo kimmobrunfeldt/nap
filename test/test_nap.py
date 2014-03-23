@@ -123,18 +123,25 @@ class TestNap(unittest.TestCase):
             'http://domain.com/resource/'
         )
 
-    @patch('requests.request')
-    def test_all_methods(self, r_request):
+    def test_all_methods(self):
         """Test all HTTP methods"""
         url = Url('http://domain.com')
+        self._test_all_methods(url, 'http://domain.com')
+
+        new_url = url.join('path/a/b')
+        self._test_all_methods(new_url, 'http://domain.com/path/a/b')
+
+    @patch('requests.request')
+    def _test_all_methods(self, url_obj, expected_url, r_request):
+        """Test all methods for given url object"""
         r_request = MagicMock(return_value=None)
 
         methods = ['delete', 'get', 'head', 'patch', 'post', 'put']
 
         for method in methods:
-            getattr(url, method.lower())()
+            getattr(url_obj, method.lower())()
 
             requests.request.assert_called_with(
                 method.upper(),
-                'http://domain.com'
+                expected_url
             )
