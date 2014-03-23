@@ -5,7 +5,7 @@
 [![Badge fury](https://badge.fury.io/py/nap.png)](https://badge.fury.io/py/nap.png)
 [![Badge PyPi](https://pypip.in/d/nap/badge.png)](https://pypip.in/d/nap/badge.png)
 
-*Nap* provides simple and easy way to request HTTP API resources. After coding a few HTTP API wrapper classes, I decided to code *Nap*. It's is just a small(*~100 loc*) wrapper around [requests][].
+*Nap* provides convenient way request HTTP APIs. After coding a few HTTP API wrapper classes, I decided to code *Nap*. It's is just a small(*~150 loc*) wrapper around [requests][].
 
 **Example**
 
@@ -19,6 +19,9 @@ api.get('users')
 users = api.join('users')
 # GET https://api.github.com/users/kimmobrunfeldt
 users.get('kimmobrunfeldt')
+
+# Or you could just call
+api.get('users/kimmobrunfeldt')
 ```
 <!-- </test-example> -->
 
