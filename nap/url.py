@@ -1,5 +1,7 @@
 """
-Easy HTTP API calling.
+Convenient way to request HTTP APIs.
+
+For examples, see http://github.com/kimmobrunfeldt/nap
 """
 
 import sys
