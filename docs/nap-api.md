@@ -2,7 +2,7 @@
 
 Reference documentation
 
-## nap.url module
+## nap.url
 
 ### [class Url(url, \*\*default_kwargs)](/nap/url.py#L20)
 
