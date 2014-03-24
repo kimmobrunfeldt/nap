@@ -20,6 +20,10 @@ from nap.url import Url
 api = Url('https://api.github.com/', auth=('kimmo', 'pass'))
 ```
 
+#### .url
+
+This attribute can be used to read base url. Read-only.
+
 #### .join(relative_url='')
 
 Joins base url with `relative_url` and returns new [Url](#class-urlurl-default_kwargs) instance

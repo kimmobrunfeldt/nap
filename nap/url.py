@@ -33,6 +33,11 @@ class Url(object):
         self._base_url = base_url
         self._default_kwargs = default_kwargs
 
+    @property
+    def url(self):
+        """Returns base url"""
+        return self._base_url
+
     def join(self, relative_url):
         """Joins base url with relative_url and returns new Url object
         from the combined url.

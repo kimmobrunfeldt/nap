@@ -96,6 +96,21 @@ class TestNap(unittest.TestCase):
             auth=('defaults', 'overriden')
         )
 
+    def test_url_getter_setter(self):
+        """Test url attribute"""
+        base_url = 'http://domain.com'
+        url = Url(base_url)
+
+        self.assertEqual(url.url, base_url)
+
+        # Inline function definition instead of using with keyword to support
+        # python 2.6 unittest module
+        def test_set(url):
+            url.url = 'http://newdomain.com'
+
+        # url attribute should be read-only
+        self.assertRaises(AttributeError, test_set, url)
+
     def test_all_methods(self):
         """Test all HTTP methods"""
         url = Url('http://domain.com')
