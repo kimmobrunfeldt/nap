@@ -15,18 +15,19 @@ notifications:
   email:
     - kimmobrunfeldt@gmail.com
 deploy:
+  # Does not work.
   # https://github.com/travis-ci/dpl#pypi
-  provider: pypi
-  distributions: 'sdist bdist_wheel'
-  docs_dir: docs
-  user: kimmobrunfeldt
-  password:
-    secure: WiNJUoJYaoDOep6V1aiMLMIH801+W7s11qqcYRKvxHWJyIcztTJA4YQmABxLjjDZPi9ljUpg2jRYzxuE83qQstWo/M6zkw7QnK2ahjzNTl/jzCmYGNYIgHiH0TYQzk0v5dtkQHjElVwq6uz6JzO/M8Fge/teUJUoeYI5EEOQ+8Y=
-  on:
-    tags: true
+  # provider: pypi
+  # distributions: 'sdist bdist_wheel'
+  # docs_dir: docs
+  # user: kimmobrunfeldt
+  # password:
+  #  secure: WiNJUoJYaoDOep6V1aiMLMIH801+W7s11qqcYRKvxHWJyIcztTJA4YQmABxLjjDZPi9ljUpg2jRYzxuE83qQstWo/M6zkw7QnK2ahjzNTl/jzCmYGNYIgHiH0TYQzk0v5dtkQHjElVwq6uz6JzO/M8Fge/teUJUoeYI5EEOQ+8Y=
+  # on:
+  #  tags: true
     # Temp fix: https://github.com/travis-ci/travis-ci/issues/1675
-    all_branches: true
-    python: '3.3'
+  #  all_branches: true
+  #  python: '3.3'
 
 after_success:
   - coveralls --verbose
