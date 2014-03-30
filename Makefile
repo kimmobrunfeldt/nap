@@ -35,12 +35,14 @@ lint:
 
 test:
 	py.test
+	egtest README.md
 
 test-all:
 	tox
 
 coverage:
-	py.test --cov nap -v --cov-report term-missing
+	coverage run --branch --source nap -m pytest
+	coverage report -m
 
 release: clean coverage test-all
 	python scripts/make-release.py $(bump)
