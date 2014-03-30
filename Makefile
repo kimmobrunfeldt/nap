@@ -41,6 +41,7 @@ test-all:
 	tox
 
 coverage:
+	egtest README.md
 	coverage run --branch --source nap -m pytest
 	coverage report -m
 
