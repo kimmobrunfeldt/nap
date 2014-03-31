@@ -10,7 +10,8 @@ install:
   - pip install -r requirements-dev.txt
   - pip install coveralls
 script:
-  make coverage
+  - if [[ $TRAVIS_PYTHON_VERSION != '3.2' ]]; then make test-examples; fi
+  - make coverage
 notifications:
   email:
     - kimmobrunfeldt@gmail.com

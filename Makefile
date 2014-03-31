@@ -33,15 +33,16 @@ clean-coverage:
 lint:
 	flake8 --exclude=__init__.py nap test
 
-test:
+test: test-examples
 	py.test
+
+test-examples:
 	egtest README.md
 
 test-all:
 	tox
 
 coverage:
-	egtest README.md
 	coverage run --branch --source nap -m pytest
 	coverage report -m
 
