@@ -1,5 +1,7 @@
 # Nap
 
+*Tests cover pretty much everything, I'd be surprised if it didn't work as supposed to.*
+
 [![Build Status](https://travis-ci.org/kimmobrunfeldt/nap.png?branch=master)](https://travis-ci.org/kimmobrunfeldt/nap)
 [![Coverage Status](https://coveralls.io/repos/kimmobrunfeldt/nap/badge.png?branch=master)](https://coveralls.io/r/kimmobrunfeldt/nap?branch=master)
 [![Badge fury](https://badge.fury.io/py/nap.png)](https://badge.fury.io/py/nap.png)
@@ -9,7 +11,6 @@
 
 **Example**
 
-<!-- <egtest> -->
 ```python
 from nap.url import Url
 api = Url('https://api.github.com/')
@@ -23,7 +24,6 @@ users.get('kimmobrunfeldt')
 # Or you could just call
 api.get('users/kimmobrunfeldt')
 ```
-<!-- </egtest> -->
 
 **Get started**
 
@@ -58,7 +58,6 @@ See [API documentation](docs/nap-api.md)
 
 Example with authentication. All authentications supported by *requests* are automatically supported.
 
-<!-- <egtest> -->
 ```python
 from nap.url import Url
 users = Url('https://api.github.com/users/')
@@ -66,11 +65,9 @@ users = Url('https://api.github.com/users/')
 response = users.get('kimmobrunfeldt', auth=('user', 'pass'))
 print(response.json())
 ```
-<!-- </egtest> -->
 
 You can also specify default keyword arguments to be passed on every request in *Url* initialization:
 
-<!-- <egtest> -->
 ```python
 from nap.url import Url
 # Keyword arguments given to Url will be given to each request method
@@ -84,11 +81,9 @@ print(response.json())
 # You can also override the default keyword arguments afterwords
 response = api.get('users/kimmobrunfeldt', auth=('kimmo', 'password1'))
 ```
-<!-- </egtest> -->
 
 Automatically convert all JSON responses to Python dict objects
 
-<!-- <egtest> -->
 ```python
 from nap.url import Url
 
@@ -105,7 +100,6 @@ api = JsonApi('https://api.github.com/')
 user = api.get('users')  # user is dict object containing parsed JSON
 print(user)
 ```
-<!-- </egtest> -->
 
 
 ## Contributing
