@@ -34,7 +34,7 @@ api.get('users/kimmobrunfeldt')
 
 ## Install
 
-Python versions 2.6 - 3.3 are supported and tested against.
+Python versions 2.6, 2.7, 3.2, 3.3 and PyPy are supported and tested against.
 
 Install latest release with *pip*:
 
