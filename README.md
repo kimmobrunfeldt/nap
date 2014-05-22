@@ -7,7 +7,7 @@
 [![Badge fury](https://badge.fury.io/py/nap.png)](https://badge.fury.io/py/nap.png)
 [![Badge PyPi](https://pypip.in/d/nap/badge.png)](https://pypip.in/d/nap/badge.png)
 
-*Nap* provides convenient way to request HTTP APIs. After coding a few HTTP API wrapper classes, I decided to code *Nap*. It's is just a small(*~150 loc*) wrapper around [requests][].
+*Nap* provides convenient way to request HTTP APIs. After coding a few HTTP API wrapper classes, I decided to code *Nap*. It's is just a small(*~150 loc*) wrapper around [requests][]. Requests is a superb HTTP library, which supports everything you'll need to get things done in today's web.
 
 **Example**
 
@@ -21,7 +21,7 @@ users = api.join('users')
 # GET https://api.github.com/users/kimmobrunfeldt
 users.get('kimmobrunfeldt')
 
-# Or you could just call
+# Another way to make the same request as above:
 api.get('users/kimmobrunfeldt')
 ```
 
@@ -82,10 +82,14 @@ print(response.json())
 response = api.get('users/kimmobrunfeldt', auth=('kimmo', 'password1'))
 ```
 
-Automatically convert all JSON responses to Python dict objects
+**A bit more complicated example.**
+Automatically convert all JSON responses to Python dict objects.
+Demonstrate various HTTP methods.
+Also raise errors from other than `200 OK` responses.
 
 ```python
 from nap.url import Url
+import requests
 
 class JsonApi(Url):
     def after_request(self, response):
@@ -94,11 +98,22 @@ class JsonApi(Url):
 
         return response.json()
 
-api = JsonApi('https://api.github.com/')
+# Use https://github.com/kennethreitz/httpbin for testing
+api = JsonApi('http://httpbin.org/')
 
-# Get authenticated user
-user = api.get('user')  # user is dict object containing parsed JSON
-print(user)
+# response is dict object containing parsed JSON
+response = api.post('post', data={'test': 'Test POST'})
+print(response)
+
+response = api.put('put', data={'test': 'Test PUT'})
+print(response)
+
+try:
+    # httpbin will response with `Method Not Allowed` if we try to do
+    # POST http://httpbin.org/get
+    api.post('get')
+except requests.exceptions.HTTPError as e:
+    print('Response was not OK, it was: %s' % e.response.status_code)
 ```
 
 
