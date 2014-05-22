@@ -7,7 +7,10 @@
 [![Badge fury](https://badge.fury.io/py/nap.png)](https://badge.fury.io/py/nap.png)
 [![Badge PyPi](https://pypip.in/d/nap/badge.png)](https://pypip.in/d/nap/badge.png)
 
-*Nap* provides convenient way to request HTTP APIs. After coding a few HTTP API wrapper classes, I decided to code *Nap*. It's is just a small(*~150 loc*) wrapper around [requests][]. Requests is a superb HTTP library, which supports everything you'll need to get things done in today's web.
+*Nap* provides convenient way to request HTTP APIs.
+After coding a few HTTP API wrapper classes, I decided to code *Nap*.
+It's is just a small(*~150 loc*) wrapper around [requests][].
+Requests is a superb HTTP library, which supports everything you'll need to get things done in today's web.
 
 **Example**
 
