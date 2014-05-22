@@ -97,7 +97,7 @@ class JsonApi(Url):
 api = JsonApi('https://api.github.com/')
 
 # Get authenticated user
-user = api.get('users')  # user is dict object containing parsed JSON
+user = api.get('user')  # user is dict object containing parsed JSON
 print(user)
 ```
 
