@@ -31,6 +31,8 @@ By default, `release` task makes a *patch* release.
 
     It will automatically update dev version to newer release version, push code and tags
 
+* Checkout the tag you created and run `make pypi` to release the tag to PyPi
+
 You can also specify *bump* parameter to `release` task:
 
   make release bump=major
