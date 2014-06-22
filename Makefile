@@ -34,10 +34,10 @@ lint:
 	flake8 --exclude=__init__.py nap test
 
 test: test-examples
-	pip install -e .
 	py.test
 
 test-examples:
+	pip install -e .
 	egtest README.md
 
 test-all:
