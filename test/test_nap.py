@@ -5,7 +5,7 @@ These tests only focus that requests is called properly.
 Everything related to HTTP requests should be tested in requests' own tests.
 """
 
-from mock import MagicMock, patch
+from mock import MagicMock, patch, Mock
 import unittest
 import requests
 
@@ -22,7 +22,7 @@ class TestNap(unittest.TestCase):
 
         new_url = url.join('/path/a/b')
         new_url.get()
-        requests.request.assert_called_with(
+        url._session.request.assert_called_with(
             'GET',
             'http://domain.com/path/a/b'
         )
@@ -38,7 +38,7 @@ class TestNap(unittest.TestCase):
 
         new_url = url.join('path')
         new_url.get()
-        requests.request.assert_called_with(
+        url._session.request.assert_called_with(
             'GET',
             'http://domain.com/path',
             auth=('user', 'pass')
@@ -52,14 +52,14 @@ class TestNap(unittest.TestCase):
 
         new_url = url.join('/path')
         new_url.get()
-        requests.request.assert_called_with(
+        url._session.request.assert_called_with(
             'GET',
             'http://domain.com/path'
         )
 
         new_url = url.join('/path/')
         new_url.get()
-        requests.request.assert_called_with(
+        url._session.request.assert_called_with(
             'GET',
             'http://domain.com/path/'
         )
@@ -82,7 +82,7 @@ class TestNap(unittest.TestCase):
 
         # Make sure defaults are passed for each request
         url.get('resource')
-        requests.request.assert_called_with(
+        url._session.request.assert_called_with(
             'GET',
             'http://domain.com/resource',
             auth=('user', 'password')
@@ -90,7 +90,7 @@ class TestNap(unittest.TestCase):
 
         # Make sure single calls can override defaults
         url.get('resource', auth=('defaults', 'overriden'))
-        requests.request.assert_called_with(
+        url._session.request.assert_called_with(
             'GET',
             'http://domain.com/resource',
             auth=('defaults', 'overriden')
@@ -129,7 +129,29 @@ class TestNap(unittest.TestCase):
         for method in methods:
             getattr(url_obj, method.lower())()
 
-            requests.request.assert_called_with(
+            url_obj._session.request.assert_called_with(
+                method.upper(),
+                expected_url
+            )
+
+    def test_all_methods_with_custom_session(self):
+        """Test all HTTP methods"""
+        session = Mock(spec_set=requests.Session())
+        url = Url('http://domain.com', session=session)
+        self._test_all_methods_with_custom_session(url, 'http://domain.com', session)
+
+        new_url = url.join('path/a/b')
+        self._test_all_methods_with_custom_session(new_url, 'http://domain.com/path/a/b', session)
+
+    def _test_all_methods_with_custom_session(self, url_obj, expected_url, session):
+        """Test all methods for given url object"""
+
+        methods = ['delete', 'get', 'head', 'patch', 'post', 'put']
+
+        for method in methods:
+            getattr(url_obj, method.lower())()
+
+            url_obj._session.request.assert_called_with(
                 method.upper(),
                 expected_url
             )

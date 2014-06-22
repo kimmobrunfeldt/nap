@@ -20,7 +20,7 @@ import requests
 class Url(object):
     """Wrapper class for requests library."""
 
-    def __init__(self, base_url, **default_kwargs):
+    def __init__(self, base_url, session=None, **default_kwargs):
         """
         * `base_url`
             API's base url. Trailing slash is optional.
@@ -30,6 +30,7 @@ class Url(object):
             Keyword arguments that will be passed to
             `requests.request` on each request
         """
+        self._session = session if session else requests
         self._base_url = base_url
         self._default_kwargs = default_kwargs
 
@@ -121,7 +122,7 @@ class Url(object):
         )
         new_kwargs.update(custom_kwargs)
 
-        response = requests.request(
+        response = self._session.request(
             http_method,
             self._join_url(relative_url),
             **new_kwargs
@@ -142,5 +143,6 @@ class Url(object):
 
         return Url(
             urljoin(self._base_url, relative_url),
+            session=self._session,
             **self._default_kwargs
         )

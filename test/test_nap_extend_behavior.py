@@ -36,7 +36,7 @@ class TestNapExtendBehavior(unittest.TestCase):
 
         # Make sure defaults are passed for each request
         response = url.get('resource')
-        requests.request.assert_called_with(
+        url._session.request.assert_called_with(
             'GET',
             'http://domain.com/resource',
             test='test'
@@ -60,7 +60,7 @@ class TestNapExtendBehavior(unittest.TestCase):
 
         # Make sure defaults were removed from kwargs
         url.get('resource')
-        requests.request.assert_called_with(
+        url._session.request.assert_called_with(
             'GET',
             'http://domain.com/resource',
             # This will still be in kwargs because manipulation
