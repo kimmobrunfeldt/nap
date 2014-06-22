@@ -45,7 +45,7 @@ test-all:
 
 coverage:
 	pip install -e .
-	coverage run --branch --source nap -m pytest
+	coverage run --branch --source nap --omit "*compat.py" -m pytest
 	coverage report -m
 
 release: clean coverage test-all
