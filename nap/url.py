@@ -10,7 +10,7 @@ from nap.compat import lru_cache, urljoin
 
 class CacheableDict(dict):
     def __hash__(self):
-        return hash(frozenset(self.items()))
+        return hash(frozenset(self.items())) #pragma: no cover
 
 
 class Url(object):
