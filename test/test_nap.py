@@ -21,10 +21,8 @@ class TestNap(unittest.TestCase):
 
         new_url = url.join('/path/a/b')
         new_url.get()
-        url._session.request.assert_called_with(
-            'GET',
-            'http://domain.com/path/a/b'
-        )
+        expected_request = new_url.prepare_request('GET', '')
+        url._session.send.assert_called_with(expected_request)
 
     @patch('requests.session', return_value=Mock(spec_set=requests.Session()))
     def test_joined_urls_option_passing(self, mocked_session):
@@ -36,11 +34,9 @@ class TestNap(unittest.TestCase):
 
         new_url = url.join('path')
         new_url.get()
-        url._session.request.assert_called_with(
-            'GET',
-            'http://domain.com/path',
-            auth=('user', 'pass')
-        )
+
+        expected_request = new_url.prepare_request('GET', '', auth=('user', 'pass'))
+        url._session.send.assert_called_with(expected_request)
 
     @patch('requests.session', return_value=Mock(spec_set=requests.Session()))
     def test_join_url_preserves_original_url(self, mocked_session):
@@ -49,17 +45,13 @@ class TestNap(unittest.TestCase):
 
         new_url = url.join('/path')
         new_url.get()
-        url._session.request.assert_called_with(
-            'GET',
-            'http://domain.com/path'
-        )
+        expected_request = new_url.prepare_request('GET', '')
+        url._session.send.assert_called_with(expected_request)
 
         new_url = url.join('/path/')
         new_url.get()
-        url._session.request.assert_called_with(
-            'GET',
-            'http://domain.com/path/'
-        )
+        expected_request = new_url.prepare_request('GET', '')
+        url._session.send.assert_called_with(expected_request)
 
     def test_requests_raises_error(self):
         """Test that requests properly raises its own errors
@@ -78,19 +70,13 @@ class TestNap(unittest.TestCase):
 
         # Make sure defaults are passed for each request
         url.get('resource')
-        url._session.request.assert_called_with(
-            'GET',
-            'http://domain.com/resource',
-            auth=('user', 'password')
-        )
+        expected_request = url.prepare_request('GET', '', auth=('user', 'password'))
+        url._session.send.assert_called_with(expected_request)
 
         # Make sure single calls can override defaults
         url.get('resource', auth=('defaults', 'overriden'))
-        url._session.request.assert_called_with(
-            'GET',
-            'http://domain.com/resource',
-            auth=('defaults', 'overriden')
-        )
+        expected_request = url.prepare_request('GET', '', auth=('defaults', 'overriden'))
+        url._session.send.assert_called_with(expected_request)
 
     def test_url_getter_setter(self):
         """Test url attribute"""
@@ -123,10 +109,8 @@ class TestNap(unittest.TestCase):
         for method in methods:
             getattr(url_obj, method.lower())()
 
-            url_obj._session.request.assert_called_with(
-                method.upper(),
-                expected_url
-            )
+            expected_request = url_obj.prepare_request(method, '')
+            url_obj._session.send.assert_called_with(expected_request)
 
     def test_all_methods_with_custom_session(self):
         """Test all HTTP methods"""
@@ -145,7 +129,5 @@ class TestNap(unittest.TestCase):
         for method in methods:
             getattr(url_obj, method.lower())()
 
-            url_obj._session.request.assert_called_with(
-                method.upper(),
-                expected_url
-            )
+            expected_request = url_obj.prepare_request(method, '')
+            url_obj._session.send.assert_called_with(expected_request)

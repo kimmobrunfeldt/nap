@@ -3,18 +3,14 @@ Convenient way to request HTTP APIs.
 
 For examples, see http://github.com/kimmobrunfeldt/nap
 """
-
-import sys
-
-_PY3 = sys.version_info >= (3, 0)
-
-# For Python 3 compatibility
-if _PY3:
-    from urllib.parse import urljoin
-else:
-    from urlparse import urljoin
-
 import requests
+
+from nap.compat import lru_cache, urljoin
+
+
+class CacheableDict(dict):
+    def __hash__(self):
+        return hash(frozenset(self.items()))
 
 
 class Url(object):
@@ -39,6 +35,7 @@ class Url(object):
         """Returns base url"""
         return self._base_url
 
+    @lru_cache(typed=True)
     def join(self, relative_url):
         """Joins base url with relative_url and returns new Url object
         from the combined url.
@@ -85,6 +82,17 @@ class Url(object):
         """
         return request_kwargs
 
+    @lru_cache(typed=True)
+    def prepare_request(self, method, relative_url, **request_kwargs):
+        """Prepares a request that is attached to the session for future usage and caches it."""
+
+        custom_kwargs = self.before_request(
+            method,
+            request_kwargs.copy()
+        )
+        request_kwargs.update(custom_kwargs)
+        return self._session.prepare_request(requests.Request(method=method, url=self._join_url(relative_url), **request_kwargs))
+
     def after_request(self, response):
         """This method can be overridden to add default behavior when response
         is returned. For example if you're working with a JSON API, you can
@@ -115,26 +123,25 @@ class Url(object):
 
         # Add default kwargs with possible custom kwargs returned by
         # before_request
-        new_kwargs = self.default_kwargs().copy()
-        custom_kwargs = self.before_request(
-            http_method,
-            kwargs.copy()
-        )
-        new_kwargs.update(custom_kwargs)
+        new_kwargs = CacheableDict(self.default_kwargs().copy())
 
-        response = self._session.request(
+        request = self.prepare_request(
             http_method,
-            self._join_url(relative_url),
+            relative_url,
             **new_kwargs
         )
 
+        response = self._session.send(request)
+
         return self.after_request(response)
 
+    @lru_cache(typed=True)
     def _join_url(self, relative_url):
         """Joins relative url with base url. Adds trailing slash if needed."""
         joined_url = urljoin(self._base_url, relative_url)
         return joined_url
 
+    @lru_cache(typed=True)
     def _remove_leading_slash(self, text):
         return text[1:] if text.startswith('/') else text
 
