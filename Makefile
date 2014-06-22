@@ -43,7 +43,7 @@ test-all:
 	tox
 
 coverage:
-    pip install . -e
+	pip install -e .
 	coverage run --branch --source nap -m pytest
 	coverage report -m
 
