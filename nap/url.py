@@ -30,7 +30,7 @@ class Url(object):
             Keyword arguments that will be passed to
             `requests.request` on each request
         """
-        self._session = session if session else requests
+        self._session = session if session else requests.session()
         self._base_url = base_url
         self._default_kwargs = default_kwargs
 

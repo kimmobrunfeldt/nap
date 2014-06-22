@@ -5,7 +5,7 @@ These tests only focus that requests is called properly.
 Everything related to HTTP requests should be tested in requests' own tests.
 """
 
-from mock import MagicMock, patch
+from mock import MagicMock, patch, Mock
 import unittest
 import requests
 
@@ -28,7 +28,7 @@ class NewUrl(Url):
 
 class TestNapExtendBehavior(unittest.TestCase):
 
-    @patch('requests.request')
+    @patch('nap.url.requests.session', return_value=Mock(spec_set=requests.Session()))
     def test_before_request_and_after_request(self, r_request):
         """Test overriding before_request() and after_request()"""
         url = NewUrl('http://domain.com')
@@ -50,7 +50,7 @@ class TestNapExtendBehavior(unittest.TestCase):
             'after_request overriding not working'
         )
 
-    @patch('requests.request')
+    @patch('nap.url.requests.session', return_value=Mock(spec_set=requests.Session()))
     def test_default_kwargs(self, r_request):
         """Test overriding default_kwargs()"""
         # We give default arguments, but the overriding implementation

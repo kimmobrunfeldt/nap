@@ -14,11 +14,10 @@ from nap.url import Url
 
 class TestNap(unittest.TestCase):
 
-    @patch('requests.request')
-    def test_join_urls(self, r_request):
+    @patch('requests.session', return_value=Mock(spec_set=requests.Session()))
+    def test_join_urls(self, mocked_session):
         """Test creating new sub-Urls"""
         url = Url('http://domain.com')
-        r_request = MagicMock(return_value=None)
 
         new_url = url.join('/path/a/b')
         new_url.get()
@@ -27,14 +26,13 @@ class TestNap(unittest.TestCase):
             'http://domain.com/path/a/b'
         )
 
-    @patch('requests.request')
-    def test_joined_urls_option_passing(self, r_request):
+    @patch('requests.session', return_value=Mock(spec_set=requests.Session()))
+    def test_joined_urls_option_passing(self, mocked_session):
         """Test that original options are correctly passed to joined urls"""
         url = Url(
             'http://domain.com',
             auth=('user', 'pass')
         )
-        r_request = MagicMock(return_value=None)
 
         new_url = url.join('path')
         new_url.get()
@@ -44,11 +42,10 @@ class TestNap(unittest.TestCase):
             auth=('user', 'pass')
         )
 
-    @patch('requests.request')
-    def test_join_url_preserves_original_url(self, r_request):
+    @patch('requests.session', return_value=Mock(spec_set=requests.Session()))
+    def test_join_url_preserves_original_url(self, mocked_session):
         """Test that original url is not touched when joining urls."""
         url = Url('http://domain.com/')
-        r_request = MagicMock(return_value=None)
 
         new_url = url.join('/path')
         new_url.get()
@@ -74,11 +71,10 @@ class TestNap(unittest.TestCase):
         url = Url('')
         self.assertRaises(requests.exceptions.MissingSchema, url.get)
 
-    @patch('requests.request')
-    def test_default_parameters(self, r_request):
+    @patch('requests.session', return_value=Mock(spec_set=requests.Session()))
+    def test_default_parameters(self, mocked_session):
         """Test default parameter behavior"""
         url = Url('http://domain.com', auth=('user', 'password'))
-        r_request = MagicMock(return_value=None)
 
         # Make sure defaults are passed for each request
         url.get('resource')
@@ -111,7 +107,8 @@ class TestNap(unittest.TestCase):
         # url attribute should be read-only
         self.assertRaises(AttributeError, test_set, url)
 
-    def test_all_methods(self):
+    @patch('requests.session', return_value=Mock(spec_set=requests.Session()))
+    def test_all_methods(self, mocked_session):
         """Test all HTTP methods"""
         url = Url('http://domain.com')
         self._test_all_methods(url, 'http://domain.com')
@@ -119,11 +116,8 @@ class TestNap(unittest.TestCase):
         new_url = url.join('path/a/b')
         self._test_all_methods(new_url, 'http://domain.com/path/a/b')
 
-    @patch('requests.request')
-    def _test_all_methods(self, url_obj, expected_url, r_request):
+    def _test_all_methods(self, url_obj, expected_url):
         """Test all methods for given url object"""
-        r_request = MagicMock(return_value=None)
-
         methods = ['delete', 'get', 'head', 'patch', 'post', 'put']
 
         for method in methods:
