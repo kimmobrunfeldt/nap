@@ -10,6 +10,9 @@ Reference documentation
     Base url. Trailing slash is optional.
     For example `'https://api.github.com'`
 
+* `session`
+    Optional session object to be used when performing the request.
+
 * `**default_kwargs`
     Keyword arguments that will be passed to
     [requests.request][] on each request
