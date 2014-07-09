@@ -3,12 +3,18 @@
 from pip.req import parse_requirements
 
 # parse_requirements() returns generator of pip.req.InstallRequirement objects
+import sys
 
 install_reqs = parse_requirements('requirements.txt')
 
 # reqs is a list of requirement
 # e.g. ['django==1.5.1', 'mezzanine==1.4.6']
 reqs = [str(ir.req) for ir in install_reqs]
+
+_PY33 = sys.version_info >= (3, 3)
+
+if not _PY33:
+    reqs.append('backports.functools_lru_cache>=1.0.1')
 
 try:
     from setuptools import setup
