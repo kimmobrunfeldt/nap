@@ -126,7 +126,7 @@ Uses [requests.request][] to send `DELETE` request.
 api.delete('path')  # DELETE https://api.github.com/path
 ```
 
-#### .before_request(method, request_kwargs)
+#### .before_request(method, relative_url, request_kwargs)
 
 This method can be overridden to customize each request.
 
