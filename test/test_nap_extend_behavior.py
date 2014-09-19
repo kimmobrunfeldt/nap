@@ -15,6 +15,9 @@ from nap.url import Url
 class NewUrl(Url):
 
     def before_request(self, method, relative_url, request_kwargs):
+        if relative_url.startswith('resource'):
+            request_kwargs['relative_url'] = True
+
         request_kwargs['test'] = 'test'
         return request_kwargs
 
@@ -39,7 +42,8 @@ class TestNapExtendBehavior(unittest.TestCase):
         requests.request.assert_called_with(
             'GET',
             'http://domain.com/resource',
-            test='test'
+            test='test',
+            relative_url=True
         )
 
         # Mocker will return 1 to after_request and we have modified it
@@ -63,7 +67,8 @@ class TestNapExtendBehavior(unittest.TestCase):
         requests.request.assert_called_with(
             'GET',
             'http://domain.com/resource',
-            # This will still be in kwargs because manipulation
-            # of default_kwargs and request_kwargs are separated
-            test='test'
+            # These kwargs will still be set even though default_kwargs
+            # is overridden
+            test='test',
+            relative_url=True
         )
