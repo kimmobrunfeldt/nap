@@ -24,7 +24,7 @@ Example usage `make test`
 
 ## Making a release
 
-By default, `release` task makes a *patch* release.
+Nap project follows [semantic versioning](http://semver.org/). By default, `release` task makes a *patch* release.
 
 * Commit your changes
 * Run `make release`
@@ -40,6 +40,7 @@ You can also specify *bump* parameter to `release` task:
 Valid values: `major`, `minor`, `patch`.
 
 * Add release notes to GitHub
+
 
 ## Contributing
 
