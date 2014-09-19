@@ -133,6 +133,9 @@ This method can be overridden to customize each request.
 * `method`
     The HTTP method of request in upper case. For example `'GET'`.
 
+* `relative_url`
+    The relative URL passed to the HTTP method, without leading slash.
+
 * `request_kwargs`
     Keyword arguments that were passed to the request method.
     This does not contain the default keyword arguments given when
