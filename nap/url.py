@@ -66,12 +66,13 @@ class Url(object):
 
     # Overridable methods to extend behavior
 
-    def before_request(self, method, request_kwargs):
+    def before_request(self, method, relative_url, request_kwargs):
         """This method can be overridden to customize each request.
 
         * `method`
             The HTTP method of request in upper case. For example `'GET'`.
-
+        * `relative_url`
+            The relative URL passed to the HTTP method, without leading slash.
         * `request_kwargs`
             Keyword arguments that were passed to the request method.
             This does not contain the default keyword arguments given when
@@ -117,6 +118,7 @@ class Url(object):
         new_kwargs = self.default_kwargs().copy()
         custom_kwargs = self.before_request(
             http_method,
+            relative_url,
             kwargs.copy()
         )
         new_kwargs.update(custom_kwargs)

@@ -14,7 +14,7 @@ from nap.url import Url
 
 class NewUrl(Url):
 
-    def before_request(self, method, request_kwargs):
+    def before_request(self, method, relative_url, request_kwargs):
         request_kwargs['test'] = 'test'
         return request_kwargs
 
