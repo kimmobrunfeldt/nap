@@ -59,17 +59,19 @@ See [API documentation](docs/nap-api.md)
 
 ## Examples
 
-Example with authentication. All authentications supported by *requests* are automatically supported.
+Find gists from GitHub.
 
 ```python
 from nap.url import Url
-users = Url('https://api.github.com/users/')
+api = Url('https://api.github.com/')
 
-response = users.get('kimmobrunfeldt', auth=('user', 'pass'))
-print(response.json())
+# Get gists since May 1st 2014 (will be paginated)
+gists = api.get('gists', params={'since': '2014-05-01T00:00:00Z'})
+print(gists.json())
 ```
 
-You can also specify default keyword arguments to be passed on every request in *Url* initialization:
+You can also specify default keyword arguments to be passed on every request in *Url* initialization.
+All authentications supported by *requests* are automatically supported.
 
 ```python
 from nap.url import Url
