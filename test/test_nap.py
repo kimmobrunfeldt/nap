@@ -28,6 +28,32 @@ class TestNap(unittest.TestCase):
         )
 
     @patch('requests.request')
+    def test_non_root_base_url_without_slash(self, r_request):
+        """Test creating non-root base url without slash"""
+        url = Url('http://domain.com/api')
+        r_request = MagicMock(return_value=None)
+
+        new_url = url.join('/path/a/b')
+        new_url.get()
+        requests.request.assert_called_with(
+            'GET',
+            'http://domain.com/api/path/a/b'
+        )
+
+    @patch('requests.request')
+    def test_non_root_base_url_with_slash(self, r_request):
+        """Test creating non-root base url with slash"""
+        url = Url('http://domain.com/api/')
+        r_request = MagicMock(return_value=None)
+
+        new_url = url.join('/path/a/b')
+        new_url.get()
+        requests.request.assert_called_with(
+            'GET',
+            'http://domain.com/api/path/a/b'
+        )
+
+    @patch('requests.request')
     def test_joined_urls_option_passing(self, r_request):
         """Test that original options are correctly passed to joined urls"""
         url = Url(
