@@ -1,15 +1,5 @@
 #!/usr/bin/env python
 
-from pip.req import parse_requirements
-
-# parse_requirements() returns generator of pip.req.InstallRequirement objects
-install_reqs = parse_requirements('requirements.txt')
-
-# reqs is a list of requirement
-# e.g. ['django==1.5.1', 'mezzanine==1.4.6']
-reqs = [str(ir.req) for ir in install_reqs]
-
-
 try:
     from setuptools import setup
 except ImportError:
@@ -34,7 +24,9 @@ setup(
     ],
     package_dir={'nap': 'nap'},
     include_package_data=True,
-    install_requires=reqs,
+    install_requires=[
+        'requests>=2.2.1,<3.0.0'
+    ],
     license='MIT',
     zip_safe=False,
     keywords='nap rest requests http',
