@@ -1,4 +1,4 @@
-.PHONY: help clean clean-pyc clean-build list test test-all coverage docs release sdist
+.PHONY: help clean clean-pyc clean-build list test test-all test-examples generate-api-docs coverage docs release sdist
 
 help:
 	@echo "clean - execute all clean tasks"
@@ -41,6 +41,9 @@ test-examples:
 
 test-all:
 	tox
+
+generate-api-docs:
+	bfdocs bfdocs-manifest.json api-docs
 
 coverage:
 	coverage run --branch --source nap -m pytest
