@@ -1,10 +1,9 @@
 language: python
 python:
-  - '2.6'
   - '2.7'
-  - '3.2'
-  - '3.3'
-  - '3.4'
+  - '3.6'
+  - '3.7'
+  - '3.8'
   - pypy
 install:
   - pip install -r requirements.txt
@@ -13,9 +12,6 @@ install:
 script:
   - if [[ $TRAVIS_PYTHON_VERSION != '3.2' ]]; then make test-examples; fi
   - make coverage
-notifications:
-  email:
-    - kimmobrunfeldt@gmail.com
 deploy:
   # Does not work.
   # https://github.com/travis-ci/dpl#pypi
