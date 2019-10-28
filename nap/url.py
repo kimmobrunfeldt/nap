@@ -138,11 +138,17 @@ class Url(object):
 
     def _remove_leading_slash(self, text):
         return text[1:] if text.startswith('/') else text
+    
+    def _ensure_trailing_slash(self, text):
+        return text if text.endswith('/') else text + '/'
 
     def _new_url(self, relative_url):
         """Create new Url which points to new url."""
 
         return Url(
-            urljoin(self._base_url, relative_url),
+            urljoin(
+                self._ensure_trailing_slash(self._base_url),
+                self._remove_leading_slash(relative_url)
+            ),
             **self._default_kwargs
         )
