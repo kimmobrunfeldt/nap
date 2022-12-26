@@ -15,4 +15,4 @@ pytest-cov==1.6
 six==1.6.1
 tox==1.7.0
 virtualenv==1.11.4
-wheel==0.22.0
+wheel==0.38.1
